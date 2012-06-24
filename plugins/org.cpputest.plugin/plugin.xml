@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            label="CppUTest Action Set"
+            visible="true"
+            id="org.cpputest.plugin.actionSet">
+         <menu
+               label="CppUTest"
+               id="cppUTestMenu">
+            <separator
+                  name="cppUTestGroup">
+            </separator>
+         </menu>
+         <action
+               label="&amp;CppUTest Action"
+               icon="icons/sample.gif"
+               class="org.cpputest.plugin.actions.CppUTestAction"
+               tooltip="Hello, Eclipse world"
+               menubarPath="cppUTestMenu/cppUTestGroup"
+               toolbarPath="cppUTestGroup"
+               id="org.cpputest.plugin.actions.CppUTestAction">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CppUTest Eclipse Plugin
+Bundle-SymbolicName: org.cpputest.plugin; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.cpputest.plugin.Activator
+Bundle-Vendor: odd-e
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
