@@ -1,11 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CppUTest Eclipse Plugin
-Bundle-SymbolicName: org.cpputest.plugin; singleton:=true
+Bundle-Name: CppUTest Eclipse Plugin: general
+Bundle-SymbolicName: org.cpputest.plugin.general;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.cpputest.plugin.Activator
-Bundle-Vendor: odd-e
+Bundle-Vendor: odd-e.com
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.junit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Import-Package: org.junit.runner

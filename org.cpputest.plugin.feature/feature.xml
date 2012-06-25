@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.cpputest.plugin.feature"
+      id="org.cpputest.plugin.general.feature"
       label="cppUTestFeature"
       version="1.0.0"
       provider-name="odd-e.com">
@@ -18,9 +18,10 @@
    </license>
 
    <plugin
-         id="org.cpputest.plugin"
+         id="org.cpputest.plugin.general"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
