@@ -7,7 +7,7 @@
   <packaging>pom</packaging>
   <name>CppUTest Plugin for Eclipse</name>
   <properties>
-    <tycho.version>0.15.0</tycho.version>
+    <tycho.version>0.10.0</tycho.version>
   </properties>
   <modules>
     <module>org.cpputest.plugin</module>
@@ -19,11 +19,6 @@
       <id>eclipse-helios</id>
       <layout>p2</layout>
       <url>http://download.eclipse.org/releases/helios</url>
-    </repository>
-    <repository>
-      <id>odd-e</id>
-      <layout>p2</layout>
-      <url>http://www.odd-e.com/update-site</url>
     </repository>
   </repositories>
   <profiles>

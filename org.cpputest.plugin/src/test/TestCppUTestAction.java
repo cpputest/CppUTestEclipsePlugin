@@ -1,9 +1,10 @@
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 
-public class CppUTestActionTest {
+public class TestCppUTestAction {
 
 	@Test
 	public void testRun() {

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CppUTest Eclipse Plugin: general
 Bundle-SymbolicName: org.cpputest.plugin.general;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.cpputest.plugin.Activator
 Bundle-Vendor: odd-e.com
 Require-Bundle: org.eclipse.ui,

@@ -2,7 +2,7 @@
 <feature
       id="org.cpputest.plugin.general.feature"
       label="cppUTestFeature"
-      version="1.0.0"
+      version="1.0.0.qualifier"
       provider-name="odd-e.com">
 
    <description url="http://www.example.com/description">
