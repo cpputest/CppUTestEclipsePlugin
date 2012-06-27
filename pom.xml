@@ -7,12 +7,13 @@
   <packaging>pom</packaging>
   <name>CppUTest Plugin for Eclipse</name>
   <properties>
-    <tycho.version>0.10.0</tycho.version>
+    <tycho.version>0.15.0</tycho.version>
   </properties>
   <modules>
     <module>org.cpputest.plugin</module>
     <module>org.cpputest.plugin.feature</module>
     <module>update-site</module>
+    <module>org.cpputest.plugin.test</module>
   </modules>
   <repositories>
     <repository>
@@ -53,13 +54,13 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
         <version>${tycho.version}</version>
         <extensions>true</extensions>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.tycho</groupId>
+        <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho.version}</version>
         <configuration>
@@ -98,4 +99,12 @@
       </plugins>
     </pluginManagement>
   </build>
+    <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.1</version>
+      <scope>test</scope>
+    </dependency>
+</dependencies>
 </project>
