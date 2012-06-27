@@ -18,7 +18,6 @@
         <configuration>
           <useUIHarness>true</useUIHarness>
           <useUIThread>false</useUIThread>
-          <argLine>-XstartOnFirstThread</argLine>
           <dependencies>
             <dependency>
               <!-- explicit dependency is only needed because SWTbot brings 
