@@ -24,6 +24,13 @@
                toolbarPath="cppUTestGroup"
                id="org.cpputest.plugin.actions.CppUTestAction">
          </action>
+         <action
+               label="Copy Empty Stub To Clipboard"
+               icon="icons/sample.gif"
+               class="org.cpputest.plugin.actions.CppUTestAction"
+               menubarPath="cppUTestMenu/cppUTestGroup"
+               id="org.cpputest.plugin.actions.CopyEmptyStubToClipboard">
+         </action>
       </actionSet>
    </extension>
 

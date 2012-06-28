@@ -1,10 +1,10 @@
-package org.cpputest.plugin.unittest;
+package org.cpputest.plugin.generaltest;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TestCppUTest {
+public class ActivatorTest {
 
 	@Test
 	public void test() {
