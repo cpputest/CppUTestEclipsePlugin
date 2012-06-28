@@ -35,7 +35,7 @@ public class SimpleEndToEndTest {
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", "void fun(void);\n");
 		editor.selectLine(0);
 		editor.contextMenu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
-		assertEquals("abcde", getClipboardContent());
+		assertEquals("void fun(){}\n", getClipboardContent());
 	
 	}
 	private void createCppProject() {
