@@ -14,8 +14,7 @@
     <module>org.cpputest.plugin.feature</module>
     <module>update-site</module>
     <module>org.cpputest.plugin.test</module>
-    
-    <module>org.cpputest.plugin.swbot.test</module>
+    <module>SWTBotTest</module>
   </modules>
   <repositories>
     <repository>

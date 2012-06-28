@@ -7,7 +7,8 @@ Bundle-Activator: org.cpputest.plugin.Activator
 Bundle-Vendor: odd-e.com
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.junit
+ org.junit,
+ org.eclipse.cdt;bundle-version="7.0.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.junit.runner

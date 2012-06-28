@@ -6,9 +6,12 @@
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
-  <groupId>org.cpputest.plugin.swbot.test</groupId>
-  <artifactId>org.cpputest.plugin.swbot.test</artifactId>
+  <groupId>org.cpputest.plugin.SWTBotTest</groupId>
+  <artifactId>org.cpputest.plugin.SWTBotTest</artifactId>
     <packaging>eclipse-test-plugin</packaging>
+    <properties>
+     <os-jvm-flags/> <!-- for the default case -->
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -18,6 +21,7 @@
         <configuration>
           <useUIHarness>true</useUIHarness>
           <useUIThread>false</useUIThread>
+          <argLine>${os-jvm-flags}</argLine>
           <dependencies>
             <dependency>
               <!-- explicit dependency is only needed because SWTbot brings 
@@ -27,9 +31,25 @@
               <artifactId>org.hamcrest</artifactId>
               <version>0.0.0</version>
             </dependency>
+            <dependency>
+              <type>p2-installable-unit</type>
+              <artifactId>org.eclipse.cdt.feature.group</artifactId>
+              <version>7.0.2</version>
+            </dependency>
           </dependencies>
         </configuration>
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>macosx-jvm-flags</id>
+      <activation>
+        <os><family>mac</family></os>
+      </activation>
+      <properties>
+        <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
+      </properties>
+    </profile>
+  </profiles>  
 </project>
