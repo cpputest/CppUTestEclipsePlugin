@@ -2,18 +2,10 @@ package org.cpputest.plugin.SWTBotTest;
 
 import static org.junit.Assert.*;
 
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
-import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
-import org.eclipse.swtbot.swt.finder.SWTBot;
-import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.eclipse.ui.PlatformUI;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,14 +19,13 @@ public class SimpleEndToEndTest {
 	public void testCppUTestMenuExist() {
 		bot.menu("CppUTest");
 	}
-	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubToClipboard() {
 		bot.perspectiveByLabel("C/C++").activate();
 		createCppProject();
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", "void fun(void);\n");
 		editor.selectLine(0);
-		editor.contextMenu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
+		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
 		assertEquals("void fun(){}\n", getClipboardContent());
 	
 	}
