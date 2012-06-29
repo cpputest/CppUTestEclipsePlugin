@@ -6,6 +6,7 @@ import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,10 +26,15 @@ public class EmptyStubTest extends CppProjectTestBase {
 	public void cleanProject(){
 		deleteProject(GENERAL_PROJECT_FOR_TESTING);
 	}
+	@AfterClass
+	static public void waitForAWhile(){
+		SWTWorkbenchBot bot = new SWTWorkbenchBot();
+		bot.sleep(2000);
+	}
 	@Test
 	public void testCopyEmptyStubToClipboard() {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("void fun(void);\n");
-		assertEquals("void fun(){}\n", clipboardContent);
+		assertEquals("void fun(){}", clipboardContent);
 	}
 	@Ignore("still under development")
 	@Test

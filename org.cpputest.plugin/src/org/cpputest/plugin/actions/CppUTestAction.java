@@ -1,5 +1,7 @@
 package org.cpputest.plugin.actions;
 
+import org.cpputest.plugin.general.CppUTestCodeGeneratorActions;
+import org.cpputest.plugin.general.CppUTestEclipseCodeGeneratorActions;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.dnd.Clipboard;
@@ -10,43 +12,23 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.jface.dialogs.MessageDialog;
 
-/**
- * Our sample action implements workbench action delegate. The action proxy will
- * be created by the workbench and shown in the UI. When the user tries to use
- * the action, this delegate will be created and execution will be delegated to
- * it.
- * 
- * @see IWorkbenchWindowActionDelegate
- */
 public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 	private IWorkbenchWindow window;
-
-	/**
-	 * The constructor.
-	 */
+	private CppUTestCodeGeneratorActions cpputestCodeGenerator = null;
 	public CppUTestAction() {
 	}
 
-	/**
-	 * The action has been activated. The argument of the method represents the
-	 * 'real' action sitting in the workbench UI.
-	 * 
-	 * @see IWorkbenchWindowActionDelegate#run
-	 */
+	public CppUTestAction(CppUTestCodeGeneratorActions cpputest) {
+		cpputestCodeGenerator = cpputest;
+	}
+
 	public void run(IAction action) {
 		if (action.getId().equals(
 				"org.cpputest.plugin.actions.CopyEmptyStubToClipboard"))
-			copyToClipboard();
+			cpputestCodeGenerator.copyEmptyStubOfSelectedCodeToClipboard();
 		else
 			MessageDialog.openInformation(window.getShell(),
-					"CppUTest Eclipse Plugin", "Hello, Eclipse world");
-	}
-
-	private void copyToClipboard() {
-		Clipboard clipboard = new Clipboard(Display.getDefault());
-		clipboard.setContents(new Object[] { "void fun(){}\n" },
-				new Transfer[] { TextTransfer.getInstance() });
-		clipboard.dispose();
+					"CppUTest Eclipse Plugin", "Hello1, Eclipse world");
 	}
 
 	/**
@@ -76,5 +58,6 @@ public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 	 */
 	public void init(IWorkbenchWindow window) {
 		this.window = window;
+		cpputestCodeGenerator = new CppUTestEclipseCodeGeneratorActions(window);
 	}
 }
