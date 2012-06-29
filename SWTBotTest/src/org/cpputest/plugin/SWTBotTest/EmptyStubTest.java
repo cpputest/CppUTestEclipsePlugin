@@ -33,8 +33,8 @@ public class EmptyStubTest extends CppProjectTestBase {
 	}
 	@Test
 	public void testCopyEmptyStubToClipboard() {
-		String clipboardContent = copyEmptyStubOfCodeToClipboard("void fun(void);\n");
-		assertEquals("void fun(){}", clipboardContent);
+		String clipboardContent = copyEmptyStubOfCodeToClipboard("void fun();\n");
+		assertEquals("void fun(){}\n", clipboardContent);
 	}
 	@Ignore("still under development")
 	@Test
@@ -42,7 +42,17 @@ public class EmptyStubTest extends CppProjectTestBase {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("int fun(void);\n");
 		assertEquals("int fun(){return 0;}\n", clipboardContent);
 	}
+	@Ignore("still under development")
+	@Test
+	public void testCopyEmptyStubToClipboardWithIncompleteCode() {
+		String clipboardContent = copyEmptyStubOfCodeToClipboard("  ");
+		shouldSeeUnableToGenerateStubMessagebox("No function is selected.");
+	}
 	
+	private void shouldSeeUnableToGenerateStubMessagebox(String string) {
+		// TODO Auto-generated method stub
+		
+	}
 	protected String copyEmptyStubOfCodeToClipboard(String signature) {
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", signature);
 		editor.selectLine(0);

@@ -2,6 +2,7 @@ package org.cpputest.plugin.platform;
 
 import org.cpputest.plugin.general.CppUTestPlatform;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -19,6 +20,9 @@ public class CppUTestEclipsePlatform implements CppUTestPlatform {
 	public String getSelectedText() {
 		ISelectionService ss = workbenchWindow.getSelectionService();
 		ISelection selection = ss.getSelection();
+		ITextSelection txt = (ITextSelection)selection;
+		if (txt != null)
+			return txt.getText();
 		return selection.toString();
 	}
 

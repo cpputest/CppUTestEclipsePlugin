@@ -1,6 +1,5 @@
 package org.cpputest.plugin.generaltest;
 
-import static org.junit.Assert.*;
 import org.cpputest.plugin.actions.*;
 import org.cpputest.plugin.general.CppUTestCodeGeneratorActions;
 import org.eclipse.jface.action.IAction;

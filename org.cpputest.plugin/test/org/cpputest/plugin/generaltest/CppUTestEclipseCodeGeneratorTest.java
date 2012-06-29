@@ -1,11 +1,8 @@
 package org.cpputest.plugin.generaltest;
 
-import static org.junit.Assert.*;
-
 import org.cpputest.plugin.general.CppUTestCodeGenerator;
 import org.cpputest.plugin.general.CppUTestEclipseCodeGeneratorActions;
 import org.cpputest.plugin.general.CppUTestPlatform;
-import org.eclipse.jface.action.IAction;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;

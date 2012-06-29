@@ -4,7 +4,7 @@ public class CppUTestCodeGeneratorImpl implements CppUTestCodeGenerator {
 
 	@Override
 	public String getEmptyStubOfCode(String string) {
-		return "void fun(){}";
+		return string.replaceAll(";", "{}\n");
 	}
 
 }

@@ -6,8 +6,5 @@ import org.junit.Test;
 
 public class SimpleEndToEndTest {
 
-	@Test
-	public void test() {
-	}
 
 }

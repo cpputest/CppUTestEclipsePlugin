@@ -13,7 +13,6 @@
     <module>org.cpputest.plugin</module>
     <module>org.cpputest.plugin.feature</module>
     <module>update-site</module>
-    <module>org.cpputest.plugin.test</module>
     <module>SWTBotTest</module>
   </modules>
   <repositories>
