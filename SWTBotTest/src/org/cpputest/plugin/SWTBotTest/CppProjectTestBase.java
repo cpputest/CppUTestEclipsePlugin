@@ -1,52 +1,44 @@
 package org.cpputest.plugin.SWTBotTest;
 
-import static org.junit.Assert.*;
-
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(SWTBotJunit4ClassRunner.class)
-public class SimpleEndToEndTest {
+public class CppProjectTestBase {
+	SWTWorkbenchBot bot = new SWTWorkbenchBot();
 
-	private SWTWorkbenchBot bot = new SWTWorkbenchBot();
-
-	@Test
-	public void testCppUTestMenuExist() {
-		bot.menu("CppUTest");
+	public CppProjectTestBase() {
+		super();
 	}
-	@Test
-	public void testCopyEmptyStubToClipboard() {
-		bot.perspectiveByLabel("C/C++").activate();
-		createCppProject();
-		SWTBotEclipseEditor editor = createNewCppFile("example.h", "void fun(void);\n");
-		editor.selectLine(0);
-		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
-		assertEquals("void fun(){}\n", getClipboardContent());
-	
-	}
-	private void createCppProject() {
+
+	protected void createCppProject(String ProjectName) {
 		bot.menu("File").menu("New").menu("Project...").click();
 		SWTBotShell shell = bot.shell("New Project");
 		shell.activate();
 		bot.tree().expandNode("C/C++").select("C++ Project");
 		bot.button("Next >").click();
- 
-		bot.textWithLabel("Project name:").setText("GeneralProjectForTesting");
+	
+		bot.textWithLabel("Project name:").setText(ProjectName);
 		bot.button("Finish").click();
 	}
-	private String getClipboardContent() {
+
+	protected void deleteProject(String projectName) {
+		bot.viewByTitle("Project Explorer").bot().tree().select(projectName);
+		bot.menu("Edit").menu("Delete").click();
+		bot.shell("Delete Resources").activate();
+		bot.checkBox().click();
+		bot.button("OK").click();
+	}
+
+	protected String getClipboardContent() {
 		SWTBotEclipseEditor temp_editor = createNewCppFile("temp_for_clipboard.h", "");
 		temp_editor.contextMenu("Paste").click();
 		String content = temp_editor.getText();
 		temp_editor.close();
 		return content;
 	}
-	private SWTBotEclipseEditor createNewCppFile(String fileName, String content) {
+
+	protected SWTBotEclipseEditor createNewCppFile(String fileName, String content) {
 		bot.menu("File").menu("New").menu("Other...").click();
 		SWTBotShell shell;
 		shell = bot.shell("New");
@@ -62,6 +54,5 @@ public class SimpleEndToEndTest {
 		editor.save();
 		return editor;
 	}
-
 
 }
