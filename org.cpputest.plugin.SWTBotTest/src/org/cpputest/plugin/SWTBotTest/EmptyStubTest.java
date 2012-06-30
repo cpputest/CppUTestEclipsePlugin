@@ -36,11 +36,10 @@ public class EmptyStubTest extends CppProjectTestBase {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("void fun();\n");
 		assertEquals("void fun(){}\n", clipboardContent);
 	}
-	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubToClipboardWithReturnType() {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("int fun(void);\n");
-		assertEquals("int fun(){return 0;}\n", clipboardContent);
+		assertEquals("int fun(void){return 0;}\n", clipboardContent);
 	}
 	@Ignore("still under development")
 	@Test

@@ -1,11 +1,19 @@
 package org.cpputest.plugin.general;
 
+import java.util.List;
+
 public class CppUTestCodeGeneratorImpl implements CppUTestCodeGenerator {
-	CppCodeParser parser = new CppCodeParser();
+	private ICppCodeParser parser = new CppCodeParser();
+
+	public CppUTestCodeGeneratorImpl() {
+	}
 
 	@Override
 	public String getEmptyCStubOfCode(String string) {
-		CppFunction fun = parser.parseFunction(string);
-		return fun.getEmptyStub(string);
+		List<CppFunction> funs = parser.parseFunctions(string);
+		StringBuilder allstubs = new StringBuilder();
+		for(CppFunction fun: funs)
+			allstubs.append(fun.getEmptyStub());
+		return allstubs.toString();
 	}
 }

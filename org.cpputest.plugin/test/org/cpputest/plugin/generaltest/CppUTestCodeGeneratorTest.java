@@ -1,13 +1,17 @@
 package org.cpputest.plugin.generaltest;
 
 import static org.junit.Assert.*;
-
 import org.cpputest.plugin.general.CppUTestCodeGeneratorImpl;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class CppUTestCodeGeneratorTest {
 
+	@Test
+	public void testNoFunctionFound() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("",cpputest.getEmptyCStubOfCode(""));
+	}
 	@Test
 	public void testGenerateSimpleFunction() {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
@@ -42,6 +46,11 @@ public class CppUTestCodeGeneratorTest {
 	public void testGenerateWithVoidParameter() {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
 		assertEquals("void foo(void){}\n",cpputest.getEmptyCStubOfCode("void foo(void);"));
+	}
+	@Test
+	public void testGenerateMultipleFunctions() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("void foo(){}\nint bar(){return 0;}\n",cpputest.getEmptyCStubOfCode("void foo();int bar();"));
 	}
 
 }
