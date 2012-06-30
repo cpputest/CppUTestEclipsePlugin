@@ -20,7 +20,7 @@ public class CppUTestEclipseCodeGeneratorTest {
 		context.checking(new Expectations() {{
 	        allowing(platform).getSelectedText();
 	        will(returnValue("abc"));
-	        oneOf(codeGenerator).getEmptyStubOfCode("abc");
+	        oneOf(codeGenerator).getEmptyCStubOfCode("abc");
 	        will(returnValue("def"));
 	        oneOf(platform).copyToClipboard("def");
 	    }});		

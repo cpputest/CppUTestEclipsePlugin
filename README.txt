@@ -20,7 +20,11 @@ How To Work On It
 2.import projects from the folder
 
 Each folder is a eclipse project, they are:
-org.cpputest.plugin         The general plug-in implementation
+org.cpputest.plugin         The general plug-in implementation.
+                            This part will do stub/mock code generation.
+                            It does not depend on CDT
+org.cpputest.runtools(planning)       The test run tools.
+                            It will depend on CDT
 org.cpputest.feature        Feature description of the plug-in
 org.cpputest.plugin.test    Unit tests
 SWTBotTest                  Integration test

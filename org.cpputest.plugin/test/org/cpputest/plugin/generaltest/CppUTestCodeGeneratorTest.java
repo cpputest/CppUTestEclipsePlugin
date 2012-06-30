@@ -11,17 +11,37 @@ public class CppUTestCodeGeneratorTest {
 	@Test
 	public void testGenerateSimpleFunction() {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
-		assertEquals("void foo(){}\n",cpputest.getEmptyStubOfCode("void foo();"));
+		assertEquals("void foo(){}\n",cpputest.getEmptyCStubOfCode("void foo();"));
 	}
 	@Test
 	public void testGenerateWithIntReturnType() {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
-		assertEquals("int foo(){return 0;}\n",cpputest.getEmptyStubOfCode("int foo();"));
+		assertEquals("int foo(){return 0;}\n",cpputest.getEmptyCStubOfCode("int foo();"));
 	}
-	@Ignore("still under development")
+	@Test
+	public void testGenerateWithOtherReturnType() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("BYTE foo(){return 0;}\n",cpputest.getEmptyCStubOfCode("BYTE foo();"));
+	}
+	@Test
+	public void testGenerateWithPointerReturnType() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("TYPE * foo(){return 0;}\n",cpputest.getEmptyCStubOfCode("TYPE * foo();"));
+	}
+	@Test
+	public void testGenerateWithReferenceType() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("TYPE & foo(){static TYPE t;return t;}\n",cpputest.getEmptyCStubOfCode("TYPE & foo();"));
+	}
+	@Test
+	public void testGenerateWithParameter() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("TYPE & foo(int a){static TYPE t;return t;}\n",cpputest.getEmptyCStubOfCode("TYPE & foo(int a);"));
+	}
+	@Test
 	public void testGenerateWithVoidParameter() {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
-		assertEquals("void foo(){}\n",cpputest.getEmptyStubOfCode("void foo(void);"));
+		assertEquals("void foo(void){}\n",cpputest.getEmptyCStubOfCode("void foo(void);"));
 	}
 
 }

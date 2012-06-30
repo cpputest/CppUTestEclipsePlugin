@@ -22,7 +22,7 @@ public class CppUTestEclipseCodeGeneratorActions implements CppUTestCodeGenerato
 	@Override
 	public void copyEmptyStubOfSelectedCodeToClipboard() {
 		String code = platform.getSelectedText();
-		String stub = codeGenerator.getEmptyStubOfCode(code);
+		String stub = codeGenerator.getEmptyCStubOfCode(code);
 		platform.copyToClipboard(stub);
 	}
 
