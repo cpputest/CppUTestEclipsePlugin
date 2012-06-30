@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="/Users/yinterry/git/CppUTestEclipsePlugin/org.cpputest.plugin.unittest/lib/jmock-junit4-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yinterry/git/CppUTestEclipsePlugin/org.cpputest.plugin.unittest/lib/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yinterry/git/CppUTestEclipsePlugin/org.cpputest.plugin.unittest/lib/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yinterry/git/CppUTestEclipsePlugin/org.cpputest.plugin.unittest/lib/jmock-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yinterry/git/CppUTestEclipsePlugin/org.cpputest.plugin.unittest/lib/jmock-legacy-2.5.1.jar"/>
+	<classpathentry kind="src" path="/org.cpputest.plugin"/>
+	<classpathentry kind="lib" path="/Applications/eclipse/plugins/org.eclipse.jface_3.7.0.v20110928-1505.jar" sourcepath="/Applications/eclipse/plugins/org.eclipse.jface_3.7.0.v20110928-1505.jar">
+		<accessrules>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/action/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/action/images/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/bindings/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/bindings/keys/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/bindings/keys/formatting/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/commands/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/contexts/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/dialogs/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/dialogs/images/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/fieldassist/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/fieldassist/images/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/images/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/jface/internal/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/jface/internal/provisional/action/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/layout/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/menus/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/operation/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/preference/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/preference/images/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/resource/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/util/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/viewers/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/viewers/deferred/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/window/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/wizard/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/jface/wizard/images/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
