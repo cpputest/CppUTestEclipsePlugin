@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class EmptyStubTest extends CppProjectTestBase {
+public class EmptyCStubTest extends CppProjectTestBase {
 
 	private static final String GENERAL_PROJECT_FOR_TESTING = "GeneralProjectForTesting";
 
@@ -44,8 +44,18 @@ public class EmptyStubTest extends CppProjectTestBase {
 	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubToClipboardWithIncompleteCode() {
-		String clipboardContent = copyEmptyStubOfCodeToClipboard("  ");
+		copyEmptyStubOfCodeToClipboard("  ");
 		shouldSeeUnableToGenerateStubMessagebox("No function is selected.");
+	}
+	@Ignore("still under development")
+	public void testCopyEmptyStubCanIgnoreCComment() {
+		String clipboardContent = copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun(void/*\"*/)/**/;/**/\n");
+		assertEquals("void fun(void){return 0;}\n", clipboardContent);
+	}
+	@Ignore("still under development")
+	public void testCopyEmptyStubCanIgnoreCppComment() {
+		String clipboardContent = copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
+		assertEquals("void fun(void){return 0;}\n", clipboardContent);
 	}
 	
 	private void shouldSeeUnableToGenerateStubMessagebox(String string) {
@@ -53,10 +63,11 @@ public class EmptyStubTest extends CppProjectTestBase {
 		
 	}
 	protected String copyEmptyStubOfCodeToClipboard(String signature) {
+		ICppCodeFormater formater = new CompactCppCodeFormater();
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", signature);
 		editor.selectLine(0);
 		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
 		String clipboardContent = getClipboardContent();
-		return clipboardContent;
+		return formater.format(clipboardContent);
 	}
 }

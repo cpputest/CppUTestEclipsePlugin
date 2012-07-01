@@ -32,6 +32,12 @@ public class CppUTestCodeGeneratorTest {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
 		assertEquals("TYPE * foo(){return 0;}\n",cpputest.getEmptyCStubOfCode("TYPE * foo();"));
 	}
+	@Ignore("next")
+	@Test
+	public void testGenerateWithVoidPointerReturnType() {
+		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
+		assertEquals("void * foo(){return 0;}\n",cpputest.getEmptyCStubOfCode("void * foo();"));
+	}
 	@Test
 	public void testGenerateWithReferenceType() {
 		CppUTestCodeGeneratorImpl cpputest = new CppUTestCodeGeneratorImpl();
