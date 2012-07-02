@@ -10,13 +10,13 @@ public class CppFunction {
 		this.signature = signature;
 	}
 
-	public String getEmptyStub() {
+	public CppCode getEmptyStub() {
 		if (!type.equals("void")) {
 			if (isReturnReference)
-				return String.format("%s{static %s t;return t;}\n",signature, type);
-			return signature.concat("{return 0;}\n");
+				return new CppCode(String.format("%s{static %s t;return t;}\n",signature, type));
+			return new CppCode(signature.concat("{return 0;}\n"));
 		}
-		return signature.concat("{}\n");
+		return new CppCode(signature.concat("{}\n"));
 	}
 
 	public boolean isReturnReference() {

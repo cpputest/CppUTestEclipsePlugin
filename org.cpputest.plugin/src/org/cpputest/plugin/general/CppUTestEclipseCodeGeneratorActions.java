@@ -1,28 +1,28 @@
 package org.cpputest.plugin.general;
 
 import org.cpputest.plugin.platform.CppUTestEclipsePlatform;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWindow;
 
 public class CppUTestEclipseCodeGeneratorActions implements CppUTestCodeGeneratorActions {
 	private CppUTestPlatform platform;
-	private CppUTestCodeGenerator codeGenerator;
+	private UnitTestCodeGenerator codeGenerator;
+	private CppCodeFormater formater;
 	public CppUTestEclipseCodeGeneratorActions(IWorkbenchWindow window) {
 		platform = new CppUTestEclipsePlatform(window);
-		codeGenerator = new CppUTestCodeGeneratorImpl();
+		codeGenerator = new CppUTestCodeGenerator();
+		formater = new CompactCppCodeFormater();
 	}
 	public CppUTestEclipseCodeGeneratorActions(CppUTestPlatform platform,
-			CppUTestCodeGenerator codeGenerator) {
+			UnitTestCodeGenerator codeGenerator, CppCodeFormater formater) {
 		this.platform = platform;
 		this.codeGenerator = codeGenerator;
+		this.formater = formater;
 	}
 	@Override
 	public void copyEmptyStubOfSelectedCodeToClipboard() {
 		String code = platform.getSelectedText();
-		String stub = codeGenerator.getEmptyCStubOfCode(code);
+		CppCode stubCode = codeGenerator.getEmptyStubOfCode(code);
+		String stub = formater.format(stubCode);
 		platform.copyToClipboard(stub);
 	}
 

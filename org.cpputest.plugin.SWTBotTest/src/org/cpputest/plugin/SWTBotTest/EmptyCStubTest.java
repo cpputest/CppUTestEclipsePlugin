@@ -63,11 +63,10 @@ public class EmptyCStubTest extends CppProjectTestBase {
 		
 	}
 	protected String copyEmptyStubOfCodeToClipboard(String signature) {
-		ICppCodeFormater formater = new CompactCppCodeFormater();
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", signature);
 		editor.selectLine(0);
 		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
 		String clipboardContent = getClipboardContent();
-		return formater.format(clipboardContent);
+		return clipboardContent;
 	}
 }

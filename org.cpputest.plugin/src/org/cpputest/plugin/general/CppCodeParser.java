@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CppCodeParser implements ICppCodeParser {
+public class CppCodeParser implements SourceCodeParser {
 	public Pattern pattern = Pattern.compile("(\\w+)\\s*(&?).*");
 
 	public CppCodeParser() {
