@@ -49,7 +49,6 @@ public class TokenizerTest {
 		YieldToken yt = new YieldToken() {
 			public void yield(String token, int line){
 				list.add(token);
-				System.out.format("token:%s\n", token);
 			}
 		};
 		
