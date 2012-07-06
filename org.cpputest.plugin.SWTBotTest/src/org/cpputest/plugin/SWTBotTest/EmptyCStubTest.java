@@ -39,7 +39,7 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	@Test
 	public void testCopyEmptyStubToClipboardWithReturnType() {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("int fun(void);\n");
-		assertEquals("int fun(void){return 0;}\n", clipboardContent);
+		assertEquals("int fun(){return 0;}\n", clipboardContent);
 	}
 	@Ignore("still under development")
 	@Test
@@ -48,11 +48,13 @@ public class EmptyCStubTest extends CppProjectTestBase {
 		shouldSeeUnableToGenerateStubMessagebox("No function is selected.");
 	}
 	@Ignore("still under development")
+	@Test
 	public void testCopyEmptyStubCanIgnoreCComment() {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun(void/*\"*/)/**/;/**/\n");
 		assertEquals("void fun(void){return 0;}\n", clipboardContent);
 	}
 	@Ignore("still under development")
+	@Test
 	public void testCopyEmptyStubCanIgnoreCppComment() {
 		String clipboardContent = copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
 		assertEquals("void fun(void){return 0;}\n", clipboardContent);

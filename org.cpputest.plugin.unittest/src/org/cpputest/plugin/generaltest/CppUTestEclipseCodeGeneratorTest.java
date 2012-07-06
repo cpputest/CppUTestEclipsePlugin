@@ -1,10 +1,10 @@
 package org.cpputest.plugin.generaltest;
 
-import org.cpputest.plugin.general.CppCode;
-import org.cpputest.plugin.general.UnitTestCodeGenerator;
-import org.cpputest.plugin.general.CppUTestEclipseCodeGeneratorActions;
-import org.cpputest.plugin.general.CppUTestPlatform;
-import org.cpputest.plugin.general.CppCodeFormater;
+import org.cpputest.codeGenerator.CppCodeFormater;
+import org.cpputest.codeGenerator.CppUTestActions;
+import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.UnitTestCodeGenerator;
+import org.cpputest.parser.CppCode;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 @RunWith(JMock.class)
 public class CppUTestEclipseCodeGeneratorTest {
 	Mockery context = new JUnit4Mockery();
+	final String EXPECTED_STUB = "stub";
+	final String SOURCE_CODE = "code";
 	@Test
 	public void testCopyEmptyStubOfSelectedCodeToClipboard() {
 		final CppUTestPlatform platform = context.mock(CppUTestPlatform.class);
@@ -23,13 +25,13 @@ public class CppUTestEclipseCodeGeneratorTest {
 		final CppCode code = new CppCode();
 		context.checking(new Expectations() {{
 	        allowing(platform).getSelectedText();
-	        will(returnValue("abc"));
-	        oneOf(codeGenerator).getEmptyStubOfCode("abc");
+	        will(returnValue(SOURCE_CODE));
+	        oneOf(codeGenerator).getEmptyStubOfCode(SOURCE_CODE);
 	        will(returnValue(code));
-	        oneOf(formater).format(code); will(returnValue("def"));
-	        oneOf(platform).copyToClipboard("def");
+	        oneOf(formater).format(code); will(returnValue(EXPECTED_STUB));
+	        oneOf(platform).copyToClipboard(EXPECTED_STUB);
 	    }});		
-		CppUTestEclipseCodeGeneratorActions cpputest = new CppUTestEclipseCodeGeneratorActions(platform, codeGenerator, formater);
+		CppUTestActions cpputest = new CppUTestActions(platform, codeGenerator, formater);
 		cpputest.copyEmptyStubOfSelectedCodeToClipboard();
 	}
 }

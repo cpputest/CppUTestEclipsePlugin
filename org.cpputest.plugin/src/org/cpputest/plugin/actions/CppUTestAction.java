@@ -1,24 +1,25 @@
 package org.cpputest.plugin.actions;
 
-import org.cpputest.plugin.general.CppUTestCodeGeneratorActions;
-import org.cpputest.plugin.general.CppUTestEclipseCodeGeneratorActions;
+import org.cpputest.codeGenerator.CompactCppCodeFormater;
+import org.cpputest.codeGenerator.CppStubber;
+import org.cpputest.codeGenerator.CppUTestCodeGenerator;
+import org.cpputest.codeGenerator.Actions;
+import org.cpputest.codeGenerator.CppUTestActions;
+import org.cpputest.parser.CppSourceCodeReader;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.Transfer;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 	private IWorkbenchWindow window;
-	private CppUTestCodeGeneratorActions cpputestCodeGenerator = null;
+	private Actions cpputestCodeGenerator = null;
 	public CppUTestAction() {
 	}
 
-	public CppUTestAction(CppUTestCodeGeneratorActions cpputest) {
+	/* constructor for unit testing */
+	public CppUTestAction(Actions cpputest) {
 		cpputestCodeGenerator = cpputest;
 	}
 
@@ -51,13 +52,15 @@ public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 	}
 
 	/**
-	 * We will cache window object in order to be able to provide parent shell
-	 * for the message dialog.
-	 * 
-	 * @see IWorkbenchWindowActionDelegate#init
+	 * this code has no unittest, perhaps need a factory.
 	 */
 	public void init(IWorkbenchWindow window) {
 		this.window = window;
-		cpputestCodeGenerator = new CppUTestEclipseCodeGeneratorActions(window);
+		CppSourceCodeReader reader = new CppSourceCodeReader();
+		CppStubber stubber = new CppStubber();
+		CppUTestEclipsePlatform platform = new CppUTestEclipsePlatform(window);
+		CppUTestCodeGenerator codeGenerator = new CppUTestCodeGenerator(reader, stubber);
+		CompactCppCodeFormater formater = new CompactCppCodeFormater();
+		cpputestCodeGenerator = new CppUTestActions(platform, codeGenerator, formater);
 	}
 }
