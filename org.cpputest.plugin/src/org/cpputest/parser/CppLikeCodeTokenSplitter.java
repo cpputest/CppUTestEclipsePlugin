@@ -7,7 +7,7 @@ package org.cpputest.parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Tokenizer {
+public class CppLikeCodeTokenSplitter {
 	private Pattern token_pattern = Pattern.compile("(\\w+|/\\*|//|:=|::|>=|\\*=|>|#\\s*define|#\\s*if|#\\s*else|#\\s*endif|#\\s*\\w+|[!%^&\\*\\-=+\\|\\\\<>/\\]\\+]+|.)");
 
 	public void generateTokensFromSourceCode(String source_code, final YieldToken yieldToken){
@@ -32,16 +32,13 @@ public class Tokenizer {
 	        if (token.equals("\n")) 
         		line += 1;
 	        
-	        if (token.startsWith("#"))
-	            token = "#" + token.substring(1).trim();
-	            
-	        if (token.equals("#define")) {
+	        if (token.startsWith("#")){
 	            while(true){
 	                int bindex = index + 1;
 	                index = source_code.indexOf("\n", bindex);;  
 	                if (index == -1)
 	                    break;
-	                if (source_code.substring(bindex,index).trim().endsWith("\\"))
+	                if (!source_code.substring(bindex,index).trim().endsWith("\\"))
 	                    break;
 	            }
 	            if(index == -1)

@@ -15,6 +15,8 @@ public class CTokenTranslator extends TokenTranslatorBase{
     }
     @Override
 	protected CppPart input(String token) {
+    	if (token.startsWith("#"))
+    		return null;
 		switch(get_state()){
 		case GLOBAL:
 			return _GLOBAL(token);
@@ -40,6 +42,10 @@ public class CTokenTranslator extends TokenTranslatorBase{
         }
         else if (token.equals("::")) 
         	set_state(State.NAMESPACE);
+        else if (token.equals(";")) {
+        	set_state(State.GLOBAL);
+        	return CppPart.EndOfGlobalStatement(token);
+        }
         else {
         	if (get_state() == State.FUNCTION_NAME)
                 return CppPart.AddToFunctionName(token);

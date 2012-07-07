@@ -34,7 +34,7 @@ public class CppLanguageUnitReader implements YieldParser {
 
 	public void read(String sourceCode) {
 		CTokenTranslator trans = new CTokenTranslator(this);
-		Tokenizer tokenizer = new Tokenizer();
+		CppLikeCodeTokenSplitter tokenizer = new CppLikeCodeTokenSplitter();
 		tokenizer.generateTokensFromSourceCode(sourceCode, trans);
 	}
 

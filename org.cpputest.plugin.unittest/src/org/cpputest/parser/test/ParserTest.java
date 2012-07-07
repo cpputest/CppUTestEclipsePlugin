@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cpputest.parser.CTokenTranslator;
-import org.cpputest.parser.Tokenizer;
+import org.cpputest.parser.CppLikeCodeTokenSplitter;
 import org.cpputest.parser.YieldParser;
 import org.cpputest.parser.parts.CppPart;
 import org.junit.Test;
@@ -23,6 +23,19 @@ public class ParserTest {
 		assertEquals(CppPart.EndOfFunctionSignature(")"), parts.get(3));
 		assertEquals(CppPart.EndOfFunction(), parts.get(4));
 	}
+	@Test
+	public void testSemicolonInGlobal() {
+		List<CppPart> parts = parse(";int");
+		assertEquals(2, parts.size());
+		assertEquals(CppPart.EndOfGlobalStatement(";"), parts.get(0));
+		assertEquals(CppPart.StartNewFunction("int",0), parts.get(1));
+	}
+	@Test
+	public void testLeadWithPreprocessor() {
+		List<CppPart> parts = parse("#include <abc>\nint");
+		assertEquals(1, parts.size());
+		assertEquals(CppPart.StartNewFunction("int",0), parts.get(0));
+	}
 	private List<CppPart> parse(String string) {
 		final ArrayList<CppPart> list = new ArrayList<CppPart>();
 		YieldParser yp = new YieldParser() {
@@ -33,7 +46,7 @@ public class ParserTest {
 		};
 		
 		CTokenTranslator trans = new CTokenTranslator(yp);
-		Tokenizer tokenizer = new Tokenizer();
+		CppLikeCodeTokenSplitter tokenizer = new CppLikeCodeTokenSplitter();
 		tokenizer.generateTokensFromSourceCode(string, trans);
 		
 		return list;

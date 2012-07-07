@@ -5,10 +5,12 @@ import static org.junit.Assert.*;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +28,10 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	@After
 	public void cleanProject(){
 		deleteProject(GENERAL_PROJECT_FOR_TESTING);
+	}
+	@BeforeClass
+	static public void increaseTimeOut() {
+		SWTBotPreferences.TIMEOUT = 10000;
 	}
 	@AfterClass
 	static public void waitForAWhile(){

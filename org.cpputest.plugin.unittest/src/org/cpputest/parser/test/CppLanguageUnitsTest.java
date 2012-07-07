@@ -53,6 +53,12 @@ public class CppLanguageUnitsTest {
 		assertEquals(1, units.size());
 		assertEquals("void foo(int * a)", units.get(0).getCode().toString());
 	}
+	@Test
+	public void testParseFunctionWithPriorCode() {
+		units = parse("#include <abc>\nvoid foo(int*a);");
+		assertEquals(1, units.size());
+		assertEquals("void foo(int * a)", units.get(0).getCode().toString());
+	}
 	private List<LanguageUnit> parse(String string) {
 		final ArrayList<LanguageUnit> list = new ArrayList<LanguageUnit>();
 		YieldLanguageUnits yp = new YieldLanguageUnits() {

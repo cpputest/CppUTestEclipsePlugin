@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cpputest.parser.Tokenizer;
+import org.cpputest.parser.CppLikeCodeTokenSplitter;
 import org.cpputest.parser.YieldToken;
 import org.junit.Test;
 
-public class TokenizerTest {
+public class CppLikeCodeTokenSplitterTest {
 
 	@Test
 	public void testEmpty() {
@@ -43,6 +43,18 @@ public class TokenizerTest {
 		List<String> tokens = tokenize("int  //comment \n  fun");
 		assertEquals(3, tokens.size());
 	}
+	@Test
+	public void testPreprocess() {
+		List<String> tokens = tokenize("#preprocess line\nint");
+		assertEquals(2, tokens.size());
+		assertEquals("int", tokens.get(1));
+	}
+	@Test
+	public void testMultipleLinePreprocess() {
+		List<String> tokens = tokenize("#preprocess line1\\\nline2\nint");
+		assertEquals(2, tokens.size());
+		assertEquals("int", tokens.get(1));
+	}
 
 	private List<String> tokenize(String string) {
 		final ArrayList<String> list = new ArrayList<String>();
@@ -52,7 +64,7 @@ public class TokenizerTest {
 			}
 		};
 		
-		Tokenizer tokenizer = new Tokenizer();
+		CppLikeCodeTokenSplitter tokenizer = new CppLikeCodeTokenSplitter();
 		tokenizer.generateTokensFromSourceCode(string, yt);
 		return list;
 	}
