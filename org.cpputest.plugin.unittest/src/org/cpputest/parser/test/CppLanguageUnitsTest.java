@@ -35,12 +35,23 @@ public class CppLanguageUnitsTest {
 		assertEquals(1, units.size());
 		assertEquals("int foo()", units.get(0).getCode().toString());
 	}
-	@Ignore("tomorrow")
 	@Test
 	public void testParseFunctionParameter() {
 		units = parse("void foo(int a);");
 		assertEquals(1, units.size());
 		assertEquals("void foo(int a)", units.get(0).getCode().toString());
+	}
+	@Test
+	public void testParseFunctionWithMultipleParameter() {
+		units = parse("void foo(int a, char c);");
+		assertEquals(1, units.size());
+		assertEquals("void foo(int a , char c)", units.get(0).getCode().toString());
+	}
+	@Test
+	public void testParseFunctionWithPointerParameter() {
+		units = parse("void foo(int*a);");
+		assertEquals(1, units.size());
+		assertEquals("void foo(int * a)", units.get(0).getCode().toString());
 	}
 	private List<LanguageUnit> parse(String string) {
 		final ArrayList<LanguageUnit> list = new ArrayList<LanguageUnit>();

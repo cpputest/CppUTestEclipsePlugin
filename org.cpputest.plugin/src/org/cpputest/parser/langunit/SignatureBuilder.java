@@ -6,6 +6,9 @@ public class SignatureBuilder {
 	public SignatureBuilder() {
 		signature = new CppLangFunctionSignature("");
 	}
+	public CppLangFunctionSignature build() {
+		return signature;
+	}
 	public SignatureBuilder withReturnType(String type) {
 		signature.setReturnType(type);
 		return this;
@@ -14,7 +17,8 @@ public class SignatureBuilder {
 		signature.setFunctionName(functionName);
 		return this;
 	}
-	public CppLangFunctionSignature build() {
-		return signature;
+	public SignatureBuilder addToParameter(String parameter) {
+		signature.addToParameter(parameter);
+		return this;
 	}
 }

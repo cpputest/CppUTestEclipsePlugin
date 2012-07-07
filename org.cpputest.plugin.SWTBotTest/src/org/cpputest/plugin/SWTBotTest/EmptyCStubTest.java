@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -33,15 +34,14 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	}
 	@Test
 	public void testCopyEmptyStubToClipboard() {
-		String clipboardContent = copyEmptyStubOfCodeToClipboard("void fun();\n");
-		assertEquals("void fun(){}\n", clipboardContent);
+		copyEmptyStubOfCodeToClipboard("void fun();\n");
+		assertEquals("void fun(){}\n", getClipboardContent());
 	}
 	@Test
 	public void testCopyEmptyStubToClipboardWithReturnType() {
-		String clipboardContent = copyEmptyStubOfCodeToClipboard("int fun(void);\n");
-		assertEquals("int fun(){return 0;}\n", clipboardContent);
+		copyEmptyStubOfCodeToClipboard("int fun(void);\n");
+		assertEquals("int fun(void){return 0;}\n", getClipboardContent());
 	}
-	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubToClipboardWithIncompleteCode() {
 		copyEmptyStubOfCodeToClipboard("  ");
@@ -50,25 +50,33 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubCanIgnoreCComment() {
-		String clipboardContent = copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun(void/*\"*/)/**/;/**/\n");
-		assertEquals("void fun(void){return 0;}\n", clipboardContent);
+		copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun(void/*\"*/)/**/;/**/\n");
+		assertEquals("void fun(void){}\n", getClipboardContent());
 	}
 	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubCanIgnoreCppComment() {
-		String clipboardContent = copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
-		assertEquals("void fun(void){return 0;}\n", clipboardContent);
+		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
+		assertEquals("void fun(void){return 0;}\n", getClipboardContent());
 	}
-	
+
+	@Ignore("still under development")
+	@Test
+	public void testStillAbleToCreateStubWhenSelectedPartOfTheSignature() {
+		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
+		assertEquals("void fun(void){return 0;}\n", getClipboardContent());
+	}
+
 	private void shouldSeeUnableToGenerateStubMessagebox(String string) {
-		// TODO Auto-generated method stub
-		
+		SWTBotShell shell = bot.shell("CppUTest");
+		shell.activate();
+		assertTrue(null != bot.label(string));
+		bot.button("OK").click();
+	
 	}
-	protected String copyEmptyStubOfCodeToClipboard(String signature) {
+	protected void copyEmptyStubOfCodeToClipboard(String signature) {
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", signature);
 		editor.selectLine(0);
 		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
-		String clipboardContent = getClipboardContent();
-		return clipboardContent;
 	}
 }

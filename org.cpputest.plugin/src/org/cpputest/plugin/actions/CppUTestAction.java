@@ -14,19 +14,19 @@ import org.eclipse.jface.dialogs.MessageDialog;
 
 public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 	private IWorkbenchWindow window;
-	private Actions cpputestCodeGenerator = null;
+	private Actions cpputestCodeGeneratorActions = null;
 	public CppUTestAction() {
 	}
 
 	/* constructor for unit testing */
 	public CppUTestAction(Actions cpputest) {
-		cpputestCodeGenerator = cpputest;
+		cpputestCodeGeneratorActions = cpputest;
 	}
 
 	public void run(IAction action) {
 		if (action.getId().equals(
 				"org.cpputest.plugin.actions.CopyEmptyStubToClipboard"))
-			cpputestCodeGenerator.copyEmptyStubOfSelectedCodeToClipboard();
+			cpputestCodeGeneratorActions.copyEmptyStubOfSelectedCodeToClipboard();
 		else
 			MessageDialog.openInformation(window.getShell(),
 					"CppUTest Eclipse Plugin", "Hello1, Eclipse world");
@@ -61,6 +61,6 @@ public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 		CppUTestEclipsePlatform platform = new CppUTestEclipsePlatform(window);
 		CppUTestCodeGenerator codeGenerator = new CppUTestCodeGenerator(reader, stubber);
 		CompactCppCodeFormater formater = new CompactCppCodeFormater();
-		cpputestCodeGenerator = new CppUTestActions(platform, codeGenerator, formater);
+		cpputestCodeGeneratorActions = new CppUTestActions(platform, codeGenerator, formater);
 	}
 }

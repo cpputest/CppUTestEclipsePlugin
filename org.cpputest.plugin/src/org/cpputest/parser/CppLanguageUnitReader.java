@@ -24,6 +24,7 @@ public class CppLanguageUnitReader implements YieldParser {
 			break;
 		case END_OF_FUNCTION:
 		case PARAMETER:
+			signatureBuilder.addToParameter(part.toString());
 		case PART_OF_LONG_FUNCTION_NAME:
 		case TOKEN:
 			break;

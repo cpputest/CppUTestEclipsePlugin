@@ -1,4 +1,4 @@
-package org.cpputest.plugin.generaltest;
+package org.cpputest.plugin.test;
 
 import org.cpputest.codeGenerator.Actions;
 import org.cpputest.plugin.actions.*;
@@ -14,10 +14,10 @@ import org.junit.runner.RunWith;
 @RunWith(JMock.class)
 public class CppUTestActionTest {
 	Mockery context = new JUnit4Mockery();
+	final IAction actionItem = context.mock(IAction.class);
+	final Actions cpputest = context.mock(Actions.class);
 	@Test
 	public void testGenerateEmptyStub() {
-		final IAction actionItem = context.mock(IAction.class);
-		final Actions cpputest = context.mock(Actions.class);
 		context.checking(new Expectations() {{
 	        allowing(actionItem).getId();
 	        will(returnValue("org.cpputest.plugin.actions.CopyEmptyStubToClipboard"));
@@ -26,6 +26,5 @@ public class CppUTestActionTest {
 		CppUTestAction action = new CppUTestAction(cpputest);
 		action.run(actionItem);
 	}
-
 }
 

@@ -16,8 +16,12 @@ public class CppUTestActions implements Actions {
 	public void copyEmptyStubOfSelectedCodeToClipboard() {
 		String code = platform.getSelectedText();
 		CppCode stubCode = codeGenerator.getEmptyStubOfCode(code);
-		String stub = formater.format(stubCode);
-		platform.copyToClipboard(stub);
+		if (!stubCode.isEmpty()) { 
+			String stub = formater.format(stubCode);
+			platform.copyToClipboard(stub);
+		}
+		else
+			platform.messageBox("No function is selected.");
 	}
 
 }

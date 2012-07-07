@@ -42,4 +42,7 @@ public class CppCode {
 			return false;
 		return true;
 	}
+	public boolean isEmpty() {
+		return code.isEmpty();
+	}
 }
