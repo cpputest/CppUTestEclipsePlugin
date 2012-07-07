@@ -31,7 +31,7 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	}
 	@BeforeClass
 	static public void increaseTimeOut() {
-		SWTBotPreferences.TIMEOUT = 10000;
+		SWTBotPreferences.TIMEOUT = 20000;
 	}
 	@AfterClass
 	static public void waitForAWhile(){
