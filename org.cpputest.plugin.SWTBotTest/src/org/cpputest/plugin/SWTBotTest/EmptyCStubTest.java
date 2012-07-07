@@ -53,24 +53,22 @@ public class EmptyCStubTest extends CppProjectTestBase {
 		copyEmptyStubOfCodeToClipboard("  ");
 		shouldSeeUnableToGenerateStubMessagebox("No function is selected.");
 	}
-	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubCanIgnoreCComment() {
 		copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun(void/*\"*/)/**/;/**/\n");
 		assertEquals("void fun(void){}\n", getClipboardContent());
 	}
-	@Ignore("still under development")
 	@Test
 	public void testCopyEmptyStubCanIgnoreCppComment() {
 		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
-		assertEquals("void fun(void){return 0;}\n", getClipboardContent());
+		assertEquals("void fun(void){}\n", getClipboardContent());
 	}
 
 	@Ignore("still under development")
 	@Test
 	public void testStillAbleToCreateStubWhenSelectedPartOfTheSignature() {
 		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
-		assertEquals("void fun(void){return 0;}\n", getClipboardContent());
+		assertEquals("void fun(void){}\n", getClipboardContent());
 	}
 
 	private void shouldSeeUnableToGenerateStubMessagebox(String string) {
@@ -82,7 +80,7 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	}
 	protected void copyEmptyStubOfCodeToClipboard(String signature) {
 		SWTBotEclipseEditor editor = createNewCppFile("example.h", signature);
-		editor.selectLine(0);
+		editor.selectRange(0,0,1000);
 		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
 	}
 }

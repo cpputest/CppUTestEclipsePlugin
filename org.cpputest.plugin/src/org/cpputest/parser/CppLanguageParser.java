@@ -2,7 +2,7 @@ package org.cpputest.parser;
 
 import org.cpputest.parser.parts.CppPart;
 
-public class CTokenTranslator extends TokenTranslatorBase{
+public class CppLanguageParser extends TokenTranslatorBase{
 	public enum State {
 		GLOBAL, DEC, NAMESPACE, DEC_TO_IMP, IMP, FUNCTION_NAME
 	}
@@ -10,13 +10,16 @@ public class CTokenTranslator extends TokenTranslatorBase{
 ;
 	private int pa_count = 0;
 	private int br_count = 0;
-    public CTokenTranslator(YieldParser yieldParser){
+    public CppLanguageParser(YieldParser yieldParser){
     	super(yieldParser);
     }
     @Override
 	protected CppPart input(String token) {
-    	if (token.startsWith("#"))
+    	if (token.startsWith("#") ||
+    			token.startsWith("/*") ||
+    			token.startsWith("//"))
     		return null;
+   
 		switch(get_state()){
 		case GLOBAL:
 			return _GLOBAL(token);

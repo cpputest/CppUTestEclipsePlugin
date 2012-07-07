@@ -75,5 +75,8 @@ public class CppPart {
 			return false;
 		return true;
 	}
+	public boolean isStar() {
+		return token.equals("*");
+	}
 
 }

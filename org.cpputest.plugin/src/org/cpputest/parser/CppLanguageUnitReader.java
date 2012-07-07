@@ -14,13 +14,17 @@ public class CppLanguageUnitReader implements YieldParser {
 	public void yield(CppPart part) {
 		switch(part.getType()){
 		case END_OF_FUNCTION_SIGNATURE:
-			yieldLanguageUnits.yield(signatureBuilder.build());
+			if (signatureBuilder.isComplete())
+				yieldLanguageUnits.yield(signatureBuilder.build());
 		case NEW_FUNCTION:
 			signatureBuilder = new SignatureBuilder();
 			signatureBuilder.withReturnType(part.toString());
 			break;
 		case ADD_TO_FUNCTION_NAME:
-			signatureBuilder.addToFunctionName(part.toString());
+			if (part.isStar())
+				signatureBuilder.addToReturnType(part.toString());
+			else
+				signatureBuilder.addToFunctionName(part.toString());
 			break;
 		case END_OF_FUNCTION:
 		case PARAMETER:
@@ -33,7 +37,7 @@ public class CppLanguageUnitReader implements YieldParser {
 	}
 
 	public void read(String sourceCode) {
-		CTokenTranslator trans = new CTokenTranslator(this);
+		CppLanguageParser trans = new CppLanguageParser(this);
 		CppLikeCodeTokenSplitter tokenizer = new CppLikeCodeTokenSplitter();
 		tokenizer.generateTokensFromSourceCode(sourceCode, trans);
 	}

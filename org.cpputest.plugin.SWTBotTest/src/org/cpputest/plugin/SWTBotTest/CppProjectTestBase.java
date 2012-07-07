@@ -50,7 +50,7 @@ public class CppProjectTestBase {
 		
 		SWTBotEclipseEditor editor = bot.editorByTitle(fileName).toTextEditor();
 		editor.selectRange(0, 0, 1000);
-		editor.typeText(content);
+		editor.setText(content);
 		editor.save();
 		return editor;
 	}

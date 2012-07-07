@@ -55,7 +55,17 @@ public class CppLikeCodeTokenSplitterTest {
 		assertEquals(2, tokens.size());
 		assertEquals("int", tokens.get(1));
 	}
-
+	@Test
+	public void testMultipleLinePreprocess2() {
+		List<String> tokens = tokenize("#endif\n\n#endif\n");
+		assertEquals(2, tokens.size());
+	}
+	@Test
+	public void testVarArgs() {
+		List<String> tokens = tokenize("...");
+		assertEquals(1, tokens.size());
+	}
+	
 	private List<String> tokenize(String string) {
 		final ArrayList<String> list = new ArrayList<String>();
 		YieldToken yt = new YieldToken() {

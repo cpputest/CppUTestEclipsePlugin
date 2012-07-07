@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CppLikeCodeTokenSplitter {
-	private Pattern token_pattern = Pattern.compile("(\\w+|/\\*|//|:=|::|>=|\\*=|>|#\\s*define|#\\s*if|#\\s*else|#\\s*endif|#\\s*\\w+|[!%^&\\*\\-=+\\|\\\\<>/\\]\\+]+|.)");
+	private Pattern token_pattern = Pattern.compile("(\\n|\\w+|/\\*|//|:=|::|>=|\\*=|>|#\\s*define|#\\s*if|#\\s*else|#\\s*endif|#\\s*\\w+|[!%^&\\*\\-=+\\|\\\\<>/\\]\\+]+|\\.{3}|.)");
 
 	public void generateTokensFromSourceCode(String source_code, final YieldToken yieldToken){
 		YieldToken yt = new YieldToken() {
@@ -29,10 +29,11 @@ public class CppLikeCodeTokenSplitter {
 	        if(!m.find(index))
 	            break;
 	        String token = m.group(0);
-	        if (token.equals("\n")) 
+	        if (token.equals("\n")) {
+	            index = index + 1;
         		line += 1;
-	        
-	        if (token.startsWith("#")){
+	        }
+	        else if (token.startsWith("#")){
 	            while(true){
 	                int bindex = index + 1;
 	                index = source_code.indexOf("\n", bindex);;  
@@ -75,7 +76,7 @@ public class CppLikeCodeTokenSplitter {
 	        else
 	            index = m.end(0);
 	        line += (token.split("\n").length - 1);
-	        if (!Character.isWhitespace(token.charAt(0)) || token.equals("\n"))
+	        if (!Character.isWhitespace(token.charAt(0)))
 	            yieldToken.yield(token, line);
 	    }
 	}
