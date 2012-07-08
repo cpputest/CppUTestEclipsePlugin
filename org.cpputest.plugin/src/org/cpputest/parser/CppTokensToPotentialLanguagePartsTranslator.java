@@ -2,15 +2,15 @@ package org.cpputest.parser;
 
 import org.cpputest.parser.parts.CppPart;
 
-public class CppLanguageParser extends TokenTranslatorBase{
+public class CppTokensToPotentialLanguagePartsTranslator extends TokenTranslatorBase{
 	public enum State {
-		GLOBAL, DEC, NAMESPACE, DEC_TO_IMP, IMP, FUNCTION_NAME
+		GLOBAL, DEC, NAMESPACE, DEC_TO_IMP, IMP, FUNCTION_NAME, TYPEDEF
 	}
 	private State _state=State.GLOBAL;
 ;
 	private int pa_count = 0;
 	private int br_count = 0;
-    public CppLanguageParser(YieldParser yieldParser){
+    public CppTokensToPotentialLanguagePartsTranslator(YieldParser yieldParser){
     	super(yieldParser);
     }
     @Override
@@ -33,12 +33,18 @@ public class CppLanguageParser extends TokenTranslatorBase{
 			return _DEC_TO_IMP(token);
 		case IMP:
 			return _IMP(token);
+		case TYPEDEF:
+			return _TYPEDEF(token);
 		}
 		return null;
 	}
     
 	private CppPart _GLOBAL(String token){
-        if (token.equals("(")) {
+        if (token.equals("typedef")) {
+        	set_state(State.TYPEDEF);
+            return CppPart.Typedef();
+        }
+        else if (token.equals("(")) {
             pa_count += 1;
             set_state(State.DEC);
             return CppPart.PartOfLongFunctionName(token);
@@ -57,6 +63,11 @@ public class CppLanguageParser extends TokenTranslatorBase{
         }
         return null;
     }
+	private CppPart _TYPEDEF(String token) {
+		if (token.equals(";"))
+        	set_state(State.GLOBAL);
+		return null;
+	}
     private CppPart _NAMESPACE(String token){
     	set_state(State.GLOBAL);
         return CppPart.AddToFunctionName("::"+token);

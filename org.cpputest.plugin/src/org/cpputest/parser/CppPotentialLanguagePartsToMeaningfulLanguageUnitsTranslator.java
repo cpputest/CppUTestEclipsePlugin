@@ -3,10 +3,10 @@ package org.cpputest.parser;
 import org.cpputest.parser.langunit.SignatureBuilder;
 import org.cpputest.parser.parts.CppPart;
 
-public class CppLanguageUnitReader implements YieldParser {
+public class CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator implements YieldParser {
 	private final YieldLanguageUnits yieldLanguageUnits;
-	private SignatureBuilder signatureBuilder = new SignatureBuilder();
-	public CppLanguageUnitReader(YieldLanguageUnits yp) {
+	private SignatureBuilder signatureBuilder = new SignatureBuilder("");
+	public CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator(YieldLanguageUnits yp) {
 		yieldLanguageUnits = yp;
 	}
 
@@ -16,15 +16,11 @@ public class CppLanguageUnitReader implements YieldParser {
 		case END_OF_FUNCTION_SIGNATURE:
 			if (signatureBuilder.isComplete())
 				yieldLanguageUnits.yield(signatureBuilder.build());
-		case NEW_FUNCTION:
-			signatureBuilder = new SignatureBuilder();
-			signatureBuilder.withReturnType(part.toString());
+		case MAYBE_NEW_FUNCTION:
+			signatureBuilder = new SignatureBuilder(part.toString());
 			break;
-		case ADD_TO_FUNCTION_NAME:
-			if (part.isStar())
-				signatureBuilder.addToReturnType(part.toString());
-			else
-				signatureBuilder.addToFunctionName(part.toString());
+		case MAYBE_PART_OF_FUNCTION_NAME:
+			signatureBuilder.addToFunctionDeclaration(part.toString());
 			break;
 		case END_OF_FUNCTION:
 		case PARAMETER:
@@ -37,7 +33,7 @@ public class CppLanguageUnitReader implements YieldParser {
 	}
 
 	public void read(String sourceCode) {
-		CppLanguageParser trans = new CppLanguageParser(this);
+		CppTokensToPotentialLanguagePartsTranslator trans = new CppTokensToPotentialLanguagePartsTranslator(this);
 		CppLikeCodeTokenSplitter tokenizer = new CppLikeCodeTokenSplitter();
 		tokenizer.generateTokensFromSourceCode(sourceCode, trans);
 	}

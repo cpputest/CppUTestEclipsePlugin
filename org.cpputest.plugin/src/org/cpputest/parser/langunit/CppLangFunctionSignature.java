@@ -25,7 +25,9 @@ public class CppLangFunctionSignature implements LanguageUnit {
 		this.functionName = functionName;
 		
 	}
-
+	public String getFunctionName() {
+		return functionName;
+	}
 	public void setReturnType(String returnType) {
 		this.returnType = returnType;
 		
@@ -33,7 +35,6 @@ public class CppLangFunctionSignature implements LanguageUnit {
 
 	@Override
 	public CppCode getCode() {
-		// TODO Auto-generated method stub
 		return new CppCode(returnType + " " + functionName + "(" + 
 				join(parameters, " ") + ")");
 	}

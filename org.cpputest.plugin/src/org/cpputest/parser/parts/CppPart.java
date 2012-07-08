@@ -2,8 +2,8 @@ package org.cpputest.parser.parts;
 
 public class CppPart {
 	public enum Type {
-		NEW_FUNCTION, END_OF_FUNCTION_SIGNATURE, PART_OF_LONG_FUNCTION_NAME
-	, ADD_TO_FUNCTION_NAME, PARAMETER, END_OF_FUNCTION, TOKEN, END_OF_GLOBAL_STATEMENT, PREPROCESSOR}
+		MAYBE_NEW_FUNCTION, END_OF_FUNCTION_SIGNATURE, PART_OF_LONG_FUNCTION_NAME
+	, MAYBE_PART_OF_FUNCTION_NAME, PARAMETER, END_OF_FUNCTION, TOKEN, END_OF_GLOBAL_STATEMENT, PREPROCESSOR, TYPEDEF}
 	private Type type;
 	private final String token;
 	private final int currentLine;
@@ -16,7 +16,7 @@ public class CppPart {
 		return type;
 	}
 	public static CppPart StartNewFunction(String token, int currentLine) {
-		return new CppPart(Type.NEW_FUNCTION, token, currentLine);
+		return new CppPart(Type.MAYBE_NEW_FUNCTION, token, currentLine);
 	}
 	static public CppPart EndOfFunctionSignature(String token){
 		return new CppPart(Type.END_OF_FUNCTION_SIGNATURE, token, 0);
@@ -25,7 +25,7 @@ public class CppPart {
 		return new CppPart(Type.PART_OF_LONG_FUNCTION_NAME, token, 0);
 	}
 	public static CppPart AddToFunctionName(String token) {
-		return new CppPart(Type.ADD_TO_FUNCTION_NAME, token, 0);
+		return new CppPart(Type.MAYBE_PART_OF_FUNCTION_NAME, token, 0);
 	}
 	public static CppPart Parameter(String token) {
 		return new CppPart(Type.PARAMETER, token, 0);
@@ -41,6 +41,9 @@ public class CppPart {
 	}
 	public static CppPart Preprocessor(String token) {
 		return new CppPart(Type.PREPROCESSOR, token, 0);
+	}
+	public static CppPart Typedef() {
+		return new CppPart(Type.TYPEDEF, "typedef", 0);
 	}
 	@Override
 	public String toString() {
@@ -75,8 +78,4 @@ public class CppPart {
 			return false;
 		return true;
 	}
-	public boolean isStar() {
-		return token.equals("*");
-	}
-
 }

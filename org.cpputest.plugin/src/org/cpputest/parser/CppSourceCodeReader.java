@@ -6,7 +6,6 @@ public class CppSourceCodeReader implements SourceCodeReader {
 
 	@Override
 	public void read(String sourceCode) {
-		// TODO Auto-generated method stub
 
 	}
 

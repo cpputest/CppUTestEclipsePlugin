@@ -5,13 +5,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cpputest.parser.CppLanguageUnitReader;
+import org.cpputest.parser.CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator;
 import org.cpputest.parser.YieldLanguageUnits;
 import org.cpputest.parser.langunit.LanguageUnit;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class CppLanguageUnitsTest {
+public class CppFunctionSignatureReadingTest {
 	List<LanguageUnit> units;
 	@Test
 	public void testParseEmptyString() {
@@ -33,7 +32,7 @@ public class CppLanguageUnitsTest {
 	public void testParseFunctionSignatureWithPointerReturnType() {
 		units = parse("int * fun();");
 		assertEquals(1, units.size());
-		assertEquals("int* fun()", units.get(0).getCode().toString());
+		assertEquals("int * fun()", units.get(0).getCode().toString());
 	}
 	@Test
 	public void testParseFunction() {
@@ -65,14 +64,18 @@ public class CppLanguageUnitsTest {
 		assertEquals(1, units.size());
 		assertEquals("void foo(int * a)", units.get(0).getCode().toString());
 	}
-	@Ignore
 	@Test
 	public void testParseFunctionWithPriorMacroOnPreviousLine() {
 		units = parse("LEADING\nvoid foo();");
 		assertEquals(1, units.size());
 		assertEquals("void foo()", units.get(0).getCode().toString());
 	}
-	@Ignore
+
+	@Test
+	public void testParseFunctionWithPriorMacroOnPreviousLineWhenReturnTypeIsAPointer() {
+		units = parse("extra char *ctermid(char *);");
+		assertEquals("char * ctermid(char *)", units.get(0).getCode().toString());
+	}	
 	@Test
 	public void testParseFunctionWithPriorMacroOnSameLine() {
 		units = parse("const int foo();");
@@ -90,7 +93,11 @@ public class CppLanguageUnitsTest {
 		units = parse("int	(*_close)(void *);");
 		assertEquals(0, units.size());
 	}
-	
+	@Test
+	public void testTypeDefIsNotASignature() {
+		units = parse("typedef int	(*_close)(void *);");
+		assertEquals(0, units.size());
+	}
 	
 	private List<LanguageUnit> parse(String string) {
 		final ArrayList<LanguageUnit> list = new ArrayList<LanguageUnit>();
@@ -101,7 +108,7 @@ public class CppLanguageUnitsTest {
 			}
 		};
 		
-		CppLanguageUnitReader reader = new CppLanguageUnitReader(yp);
+		CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator reader = new CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator(yp);
 		reader.read(string);
 		
 		return list;

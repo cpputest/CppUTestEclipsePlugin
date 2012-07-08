@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cpputest.parser.CppLanguageParser;
+import org.cpputest.parser.CppTokensToPotentialLanguagePartsTranslator;
 import org.cpputest.parser.CppLikeCodeTokenSplitter;
 import org.cpputest.parser.YieldParser;
 import org.cpputest.parser.parts.CppPart;
@@ -68,7 +68,7 @@ public class CppLanguageParserTest {
 			}
 		};
 		
-		CppLanguageParser trans = new CppLanguageParser(yp);
+		CppTokensToPotentialLanguagePartsTranslator trans = new CppTokensToPotentialLanguagePartsTranslator(yp);
 		CppLikeCodeTokenSplitter tokenizer = new CppLikeCodeTokenSplitter();
 		tokenizer.generateTokensFromSourceCode(string, trans);
 		

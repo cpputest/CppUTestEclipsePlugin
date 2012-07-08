@@ -24,7 +24,7 @@ public class SignatureIterable implements Iterable<CppLangFunctionSignature> {
 			}
 		};
 		
-		CppLanguageUnitReader reader = new CppLanguageUnitReader(yp);
+		CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator reader = new CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator(yp);
 		reader.read(sourceCode);
 		
 		return list.iterator();

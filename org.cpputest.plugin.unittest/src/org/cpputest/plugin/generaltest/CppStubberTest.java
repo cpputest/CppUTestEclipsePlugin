@@ -13,9 +13,8 @@ public class CppStubberTest {
 
 	@Test
 	public void testVoidFunctionWithoutParameter() {
-		CppLangFunctionSignature signature = signatureBuilder()
-				.withReturnType("void")
-				.addToFunctionName("fun")
+		CppLangFunctionSignature signature = signatureBuilder("void")
+				.addToFunctionDeclaration("fun")
 				.build();
 		
 		CppCode stub = stubber.getEmptyCStub(signature);
@@ -25,9 +24,8 @@ public class CppStubberTest {
 
 	@Test
 	public void testFunctionWithoutParameterReturnsInt() {
-		CppLangFunctionSignature signature = signatureBuilder()
-				.withReturnType("int")
-				.addToFunctionName("foo")
+		CppLangFunctionSignature signature = signatureBuilder("int")
+				.addToFunctionDeclaration("foo")
 				.build();
 		
 		CppCode stub = stubber.getEmptyCStub(signature);
@@ -35,8 +33,8 @@ public class CppStubberTest {
 		assertEquals("int foo(){return 0;}\n", stub.toString());
 	}
 	
-	private SignatureBuilder signatureBuilder() {
-		return new SignatureBuilder();
+	private SignatureBuilder signatureBuilder(String returnType) {
+		return new SignatureBuilder(returnType);
 	}
 
 }

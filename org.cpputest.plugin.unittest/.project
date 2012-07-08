@@ -3,7 +3,7 @@
 	<name>org.cpputest.plugin.unittest</name>
 	<comment></comment>
 	<projects>
-		<project>achievements-general</project>
+		<project>org.cpputest.plugin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
