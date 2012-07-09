@@ -1,10 +1,11 @@
 package org.cpputest.action.test;
 
 import org.cpputest.codeGenerator.CppCodeFormater;
-import org.cpputest.codeGenerator.CppUTestActions;
 import org.cpputest.codeGenerator.CppUTestPlatform;
 import org.cpputest.codeGenerator.UnitTestCodeGenerator;
 import org.cpputest.parser.CppCode;
+import org.cpputest.plugin.CppUTestActionRunner;
+import org.cpputest.plugin.CppUTestActions;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;

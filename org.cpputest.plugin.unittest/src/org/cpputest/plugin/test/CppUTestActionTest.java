@@ -1,6 +1,6 @@
 package org.cpputest.plugin.test;
 
-import org.cpputest.codeGenerator.Actions;
+import org.cpputest.plugin.ActionRunner;
 import org.cpputest.plugin.actions.*;
 import org.eclipse.jface.action.IAction;
 import org.jmock.Expectations;
@@ -15,13 +15,11 @@ import org.junit.runner.RunWith;
 public class CppUTestActionTest {
 	Mockery context = new JUnit4Mockery();
 	final IAction actionItem = context.mock(IAction.class);
-	final Actions cpputest = context.mock(Actions.class);
+	final ActionRunner cpputest = context.mock(ActionRunner.class);
 	@Test
 	public void testGenerateEmptyStub() {
 		context.checking(new Expectations() {{
-	        allowing(actionItem).getId();
-	        will(returnValue("org.cpputest.plugin.actions.CopyEmptyStubToClipboard"));
-	        oneOf(cpputest).copyEmptyStubOfSelectedCodeToClipboard();
+	        oneOf(cpputest).run(actionItem);
 	    }});		
 		CppUTestAction action = new CppUTestAction(cpputest);
 		action.run(actionItem);

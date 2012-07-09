@@ -2,6 +2,7 @@ package org.cpputest.plugin.SWTBotTest;
 
 import static org.junit.Assert.*;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
@@ -21,12 +22,12 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	private static final String GENERAL_PROJECT_FOR_TESTING = "GeneralProjectForTesting";
 
 	@Before
-	public void setupProject() {
+	public void setupProject() throws CoreException {
 		bot.perspectiveByLabel("C/C++").activate();
 		createCppProject(GENERAL_PROJECT_FOR_TESTING);
 	}
 	@After
-	public void cleanProject(){
+	public void cleanProject() throws CoreException{
 		deleteProject(GENERAL_PROJECT_FOR_TESTING);
 	}
 	@BeforeClass
@@ -39,36 +40,36 @@ public class EmptyCStubTest extends CppProjectTestBase {
 		bot.sleep(2000);
 	}
 	@Test
-	public void testCopyEmptyStubToClipboard() {
-		copyEmptyStubOfCodeToClipboard("void fun();\n");
-		assertEquals("void fun(){}\n", getClipboardContent());
+	public void testCopyEmptyStubToClipboard() throws CoreException {
+		copyEmptyStubOfCodeToClipboard("void fun1();\n");
+		assertEquals("void fun1(){}\n", getClipboardContent());
 	}
 	@Test
-	public void testCopyEmptyStubToClipboardWithReturnType() {
-		copyEmptyStubOfCodeToClipboard("int fun(void);\n");
-		assertEquals("int fun(void){return 0;}\n", getClipboardContent());
+	public void testCopyEmptyStubToClipboardWithReturnType() throws CoreException {
+		copyEmptyStubOfCodeToClipboard("int fun2(void);\n");
+		assertEquals("int fun2(void){return 0;}\n", getClipboardContent());
 	}
 	@Test
-	public void testCopyEmptyStubToClipboardWithIncompleteCode() {
+	public void testCopyEmptyStubToClipboardWithIncompleteCode() throws CoreException {
 		copyEmptyStubOfCodeToClipboard("  ");
 		shouldSeeUnableToGenerateStubMessagebox("No function is selected.");
 	}
 	@Test
-	public void testCopyEmptyStubCanIgnoreCComment() {
-		copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun(void/*\"*/)/**/;/**/\n");
-		assertEquals("void fun(void){}\n", getClipboardContent());
+	public void testCopyEmptyStubCanIgnoreCComment() throws CoreException {
+		copyEmptyStubOfCodeToClipboard("/* /* */ void /*\"*/fun3(void/*\"*/)/**/;/**/\n");
+		assertEquals("void fun3(void){}\n", getClipboardContent());
 	}
 	@Test
-	public void testCopyEmptyStubCanIgnoreCppComment() {
-		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
-		assertEquals("void fun(void){}\n", getClipboardContent());
+	public void testCopyEmptyStubCanIgnoreCppComment() throws CoreException {
+		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun4(void//xxx\n)//\n;//\n");
+		assertEquals("void fun4(void){}\n", getClipboardContent());
 	}
 
 	@Ignore("still under development")
 	@Test
-	public void testStillAbleToCreateStubWhenSelectedPartOfTheSignature() {
-		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun(void//xxx\n)//\n;//\n");
-		assertEquals("void fun(void){}\n", getClipboardContent());
+	public void testStillAbleToCreateStubWhenSelectedPartOfTheSignature() throws CoreException {
+		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun5(void//xxx\n)//\n;//\n");
+		assertEquals("void fun5(void){}\n", getClipboardContent());
 	}
 
 	private void shouldSeeUnableToGenerateStubMessagebox(String string) {
@@ -78,8 +79,8 @@ public class EmptyCStubTest extends CppProjectTestBase {
 		bot.button("OK").click();
 	
 	}
-	protected void copyEmptyStubOfCodeToClipboard(String signature) {
-		SWTBotEclipseEditor editor = createNewCppFile("example.h", signature);
+	protected void copyEmptyStubOfCodeToClipboard(String signature) throws CoreException {
+		SWTBotEclipseEditor editor = createNewCppFile(GENERAL_PROJECT_FOR_TESTING, "example.h", signature);
 		editor.selectRange(0,0,1000);
 		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
 	}

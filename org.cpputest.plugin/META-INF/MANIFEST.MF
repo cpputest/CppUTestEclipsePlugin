@@ -8,7 +8,8 @@ Bundle-Vendor: odd-e.com
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit,
- org.eclipse.cdt;bundle-version="7.0.2"
+ org.eclipse.cdt;bundle-version="7.0.2",
+ org.eclipse.core.resources
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.jface.text,

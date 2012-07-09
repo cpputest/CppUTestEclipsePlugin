@@ -16,15 +16,6 @@
             </separator>
          </menu>
          <action
-               label="&amp;CppUTest Action"
-               icon="icons/sample.gif"
-               class="org.cpputest.plugin.actions.CppUTestAction"
-               tooltip="Hello, Eclipse world"
-               menubarPath="cppUTestMenu/cppUTestGroup"
-               toolbarPath="cppUTestGroup"
-               id="org.cpputest.plugin.actions.CppUTestAction">
-         </action>
-         <action
                label="Copy Empty Stub To Clipboard"
                icon="icons/sample.gif"
                class="org.cpputest.plugin.actions.CppUTestAction"
@@ -32,6 +23,29 @@
                id="org.cpputest.plugin.actions.CopyEmptyStubToClipboard">
          </action>
       </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="org.cpputest.plugin.editorContribution"
+            objectClass="org.eclipse.ui.IEditorInput"
+            nameFilter="*.*">
+         <menu
+               id="org.cpputest.plugin.editorContextMenu"
+               label="CppUTest"
+               path="additions">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="org.cpputest.plugin.actions.CppUTestContextMenutActions"
+               enablesFor="1"
+               id="org.cpputest.plugin.actions.CopyEmptyStubToClipboard"
+               label="Copy Empty Stub To Clipboard"
+               menubarPath="org.cpputest.plugin.editorContextMenu/group1">
+         </action>
+      </objectContribution>
    </extension>
 
 </plugin>

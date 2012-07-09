@@ -1,58 +1,92 @@
 package org.cpputest.plugin.SWTBotTest;
 
+import static org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable.syncExec;
+
+import java.io.ByteArrayInputStream;
+
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.waits.Conditions;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
+import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.PlatformUI;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.hamcrest.core.IsInstanceOf;
+import static org.eclipse.swtbot.eclipse.finder.matchers.WidgetMatcherFactory.withPartName;
 
 public class CppProjectTestBase {
 	SWTWorkbenchBot bot = new SWTWorkbenchBot();
+	IWorkspace workspace = ResourcesPlugin.getWorkspace();
+	IWorkspaceRoot root = workspace.getRoot();
 
 	public CppProjectTestBase() {
 		super();
 	}
 
-	protected void createCppProject(String ProjectName) {
-		bot.menu("File").menu("New").menu("Project...").click();
-		SWTBotShell shell = bot.shell("New Project");
-		shell.activate();
-		bot.tree().expandNode("C/C++").select("C++ Project");
-		bot.button("Next >").click();
-	
-		bot.textWithLabel("Project name:").setText(ProjectName);
-		bot.button("Finish").click();
+	protected void createCppProject(String ProjectName) throws CoreException {
+		IProject project = root.getProject(ProjectName);
+		project.create(new NullProgressMonitor());
+		project.open(new NullProgressMonitor());
 	}
 
-	protected void deleteProject(String projectName) {
-		bot.viewByTitle("Project Explorer").bot().tree().select(projectName);
-		bot.menu("Edit").menu("Delete").click();
-		bot.shell("Delete Resources").activate();
-		bot.checkBox().click();
-		bot.button("OK").click();
+	protected void deleteProject(String projectName) throws CoreException {
+		root.getProject(projectName).delete(true, true, new NullProgressMonitor());
 	}
 
 	protected String getClipboardContent() {
-		SWTBotEclipseEditor temp_editor = createNewCppFile("temp_for_clipboard.h", "");
-		temp_editor.contextMenu("Paste").click();
-		String content = temp_editor.getText();
-		temp_editor.close();
-		return content;
+		final StringBuilder content = new StringBuilder();
+	
+		syncExec(new VoidResult() {
+			public void run() {
+				Clipboard clipboard = new Clipboard(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell().getDisplay());
+				TextTransfer textTransfer = TextTransfer.getInstance();
+				content.append((String) clipboard.getContents(textTransfer));
+			}
+		});
+		return content.toString();
+	}
+	
+	protected void clickContextMenu(final SWTBotEclipseEditor editor, String string) {
+		// this doesn't work so far.
+		syncExec(new VoidResult() {
+			public void run() {
+				editor.toTextEditor().contextMenu("Copy Empty Stub To Clipboard").click();
+			}
+		});
+		
 	}
 
-	protected SWTBotEclipseEditor createNewCppFile(String fileName, String content) {
-		bot.menu("File").menu("New").menu("Other...").click();
-		SWTBotShell shell;
-		shell = bot.shell("New");
-		shell.activate();
-		bot.tree().expandNode("C/C++").select("Header File");
-		bot.button("Next >").click();
-		bot.textWithLabel("Header file:").setText(fileName);
-		bot.button("Finish").click();
-		
-		SWTBotEclipseEditor editor = bot.editorByTitle(fileName).toTextEditor();
-		editor.selectRange(0, 0, 1000);
-		editor.setText(content);
-		editor.save();
-		return editor;
+	@SuppressWarnings("unchecked")
+	protected SWTBotEclipseEditor createNewCppFile(String projectName, String fileName, String content) throws CoreException {
+		IProject project = root.getProject(projectName);
+		IFile file = project.getFile(fileName);
+		file.create(new ByteArrayInputStream(content.getBytes()), true, new NullProgressMonitor());
+		project.refreshLocal(IResource.DEPTH_INFINITE, null);
+		bot.viewByTitle("Project Explorer").bot().tree().expandNode(projectName).getNode(fileName).doubleClick();
+		long oldTimeout = SWTBotPreferences.TIMEOUT;
+		SWTBotPreferences.TIMEOUT = 5000;
+		Matcher<?> editorMatcher = Matchers.allOf(
+				IsInstanceOf.instanceOf(IEditorReference.class),
+				withPartName(fileName)
+				);
+		bot.waitUntil(Conditions.waitForEditor((Matcher<IEditorReference>) editorMatcher));
+		SWTBotPreferences.TIMEOUT = oldTimeout;
+		SWTBotEditor swtBoteditor = bot.activeEditor();
+		return swtBoteditor.toTextEditor();				
 	}
 
 }
