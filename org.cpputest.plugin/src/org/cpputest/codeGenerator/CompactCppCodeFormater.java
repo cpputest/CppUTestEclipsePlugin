@@ -1,6 +1,6 @@
 package org.cpputest.codeGenerator;
 
-import org.cpputest.parser.CppCode;
+
 
 public class CompactCppCodeFormater implements CppCodeFormater {
 

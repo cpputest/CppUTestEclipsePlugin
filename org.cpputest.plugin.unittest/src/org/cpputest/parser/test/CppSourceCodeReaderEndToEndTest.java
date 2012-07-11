@@ -8,7 +8,7 @@ import org.cpputest.parser.CppSourceCodeReader;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
 import org.junit.Test;
 
-public class CppSourceCodeReaderTest {
+public class CppSourceCodeReaderEndToEndTest {
 	private static final String EMPTY_SOURCE_CODE = "";
 	@Test
 	public void testShouldReturnEmptyIteratorReadSignatureFromEmptyString() {

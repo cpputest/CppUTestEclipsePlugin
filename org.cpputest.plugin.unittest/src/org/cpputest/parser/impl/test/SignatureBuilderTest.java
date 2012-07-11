@@ -1,4 +1,4 @@
-package org.cpputest.parser.test;
+package org.cpputest.parser.impl.test;
 
 import static org.junit.Assert.*;
 

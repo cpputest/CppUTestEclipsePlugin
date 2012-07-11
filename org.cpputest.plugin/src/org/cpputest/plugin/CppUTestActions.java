@@ -1,9 +1,9 @@
 package org.cpputest.plugin;
 
+import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppCodeFormater;
 import org.cpputest.codeGenerator.CppUTestPlatform;
 import org.cpputest.codeGenerator.UnitTestCodeGenerator;
-import org.cpputest.parser.CppCode;
 
 public class CppUTestActions implements Actions {
 	public CppUTestPlatform platform;

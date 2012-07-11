@@ -1,6 +1,5 @@
 package org.cpputest.plugin;
 
-import org.cpputest.parser.CppCode;
 import org.eclipse.jface.action.IAction;
 
 public class CppUTestActionRunner implements ActionRunner {

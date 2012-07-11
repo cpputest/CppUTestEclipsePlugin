@@ -1,6 +1,6 @@
 package org.cpputest.parser.langunit;
 
-import org.cpputest.parser.CppCode;
+import org.cpputest.codeGenerator.CppCode;
 
 public interface LanguageUnit {
 

@@ -1,6 +1,5 @@
 package org.cpputest.codeGenerator;
 
-import org.cpputest.parser.CppCode;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
 
 public class CppStubber implements Stubber {

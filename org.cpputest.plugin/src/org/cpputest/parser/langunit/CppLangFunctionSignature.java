@@ -3,7 +3,7 @@ package org.cpputest.parser.langunit;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cpputest.parser.CppCode;
+import org.cpputest.codeGenerator.CppCode;
 
 public class CppLangFunctionSignature implements LanguageUnit {
 

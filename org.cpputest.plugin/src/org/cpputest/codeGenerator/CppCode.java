@@ -1,4 +1,4 @@
-package org.cpputest.parser;
+package org.cpputest.codeGenerator;
 
 public class CppCode {
 	private String code;

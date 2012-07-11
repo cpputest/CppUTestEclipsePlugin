@@ -1,6 +1,5 @@
 package org.cpputest.codeGenerator;
 
-import org.cpputest.parser.CppCode;
 
 public class CppFunction {
 	private final String type;
