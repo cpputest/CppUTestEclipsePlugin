@@ -5,7 +5,7 @@ import org.cpputest.parser.impl.Token;
 public class CppPart {
 	public enum Type {
 		MAYBE_NEW_FUNCTION, END_OF_FUNCTION_SIGNATURE, PART_OF_LONG_FUNCTION_NAME
-	, MAYBE_PART_OF_FUNCTION_NAME, PARAMETER, END_OF_FUNCTION, TOKEN, END_OF_GLOBAL_STATEMENT, PREPROCESSOR, TYPEDEF}
+	, MAYBE_PART_OF_FUNCTION_NAME, PARAMETER, END_OF_FUNCTION, TOKEN, END_OF_GLOBAL_STATEMENT, PREPROCESSOR, TYPEDEF, ASSIGNMENT}
 	private Type type;
 	private final Token token;
 	private CppPart(Type type, Token token){
@@ -36,12 +36,15 @@ public class CppPart {
 	public static CppPart Token(org.cpputest.parser.impl.Token token2) {
 		return new CppPart(Type.TOKEN, token2);
 	}
-	public static CppPart EndOfGlobalStatement(Token token2) {
-		return new CppPart(Type.END_OF_GLOBAL_STATEMENT, token2);
+	public static CppPart EndOfGlobalStatement() {
+		return new CppPart(Type.END_OF_GLOBAL_STATEMENT, null);
 	}
 	
 	public static CppPart Typedef() {
 		return new CppPart(Type.TYPEDEF, null);
+	}
+	public static CppPart Assignment() {
+		return new CppPart(Type.ASSIGNMENT, null);
 	}
 
 	@Override

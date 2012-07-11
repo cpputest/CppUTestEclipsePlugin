@@ -90,4 +90,8 @@ public class Token {
 		return token.equals("typedef");
 	}
 
+	public boolean isAssignment() {
+		return token.equals("=");
+	}
+
 }

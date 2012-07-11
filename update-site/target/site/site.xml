@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.cpputest.plugin.general.feature_1.0.0.201207110635.jar" id="org.cpputest.plugin.general.feature" version="1.0.0.201207110635">
+   <feature url="features/org.cpputest.stubber.feature_1.0.0.201207110824.jar" id="org.cpputest.stubber.feature" version="1.0.0.201207110824">
       <category name="CppUTest"/>
    </feature>
    <category-def name="CppUTest" label="CppUTest"/>

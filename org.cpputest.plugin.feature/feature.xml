@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.cpputest.plugin.general.feature"
-      label="cppUTestFeature"
+      id="org.cpputest.stubber.feature"
+      label="C/C++ Stub Mock Generator"
       version="1.0.0.qualifier"
       provider-name="odd-e.com">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://github.com/terryyin/CppUTestEclipsePlugin/">
+      The stub/mock generating feature.
    </description>
 
    <copyright url="http://www.example.com/copyright">

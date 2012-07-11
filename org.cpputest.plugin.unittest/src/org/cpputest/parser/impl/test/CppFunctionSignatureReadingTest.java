@@ -68,7 +68,7 @@ public class CppFunctionSignatureReadingTest {
 		parts.add(CppPart.EndOfFunctionSignature(new Token(")")));
 		units = getLanguageUnits(parts);
 		assertEquals(1, units.size());
-		assertEquals("void foo()", units.get(0).getCode().toString());
+		assertEquals("EXTRA void foo()", units.get(0).getCode().toString());
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class CppFunctionSignatureReadingTest {
 		parts.add(CppPart.AddToFunctionName(new Token("foo")));
 		parts.add(CppPart.EndOfFunctionSignature(new Token(")")));
 		units = getLanguageUnits(parts);
-		assertEquals("CHAR * foo()", units.get(0).getCode().toString());
+		assertEquals("EXTRA CHAR * foo()", units.get(0).getCode().toString());
 	}	
 	@Test
 	public void testParseFunctionWithPriorMacroOnSameLine() {

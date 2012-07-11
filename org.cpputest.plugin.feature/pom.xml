@@ -9,7 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <groupId>org.cpputest.plugin</groupId>
-  <artifactId>org.cpputest.plugin.general.feature</artifactId>
+  <artifactId>org.cpputest.stubber.feature</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
   <build>

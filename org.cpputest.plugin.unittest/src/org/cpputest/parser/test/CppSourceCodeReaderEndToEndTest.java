@@ -25,5 +25,12 @@ public class CppSourceCodeReaderEndToEndTest {
 		assertTrue(it.hasNext());
 		assertEquals("void fun()", it.next().getCode().toString());
 	}
+	@Test
+	public void testSizeofIsNotAFunction() {
+		CppSourceCodeReader reader = new CppSourceCodeReader();
+		Iterable<CppLangFunctionSignature> iterable = reader.signatures("int a = sizeof(b);");
+		Iterator<CppLangFunctionSignature> it = iterable.iterator();
+		assertFalse(it.hasNext());
+	}
 
 }

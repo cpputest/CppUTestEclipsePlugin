@@ -29,7 +29,7 @@ public class PotentialLanguagePartsTest {
 		String[] strs = {";","int"};
 		List<CppPart> parts = getPotentialParts(getTokens(strs));
 		assertEquals(2, parts.size());
-		assertEquals(CppPart.EndOfGlobalStatement(new Token(";")), parts.get(0));
+		assertEquals(CppPart.EndOfGlobalStatement(), parts.get(0));
 		assertEquals(CppPart.StartNewFunction(new Token("int")), parts.get(1));
 	}
 	@Test
@@ -97,6 +97,16 @@ public class PotentialLanguagePartsTest {
 		List<CppPart> parts = getPotentialParts(getTokens(strs));
 		assertEquals(2, parts.size());
 		assertEquals(CppPart.StartNewFunction(new Token("SHOULD_BE_ABILE_TO_SEE")), parts.get(1));
+	}
+
+	@Test
+	public void testGlobalAssignment() {
+		String[] strs = {"int", "a","=","b",";"};
+		List<CppPart> parts = getPotentialParts(getTokens(strs));
+		assertEquals(CppPart.StartNewFunction(new Token("int")), parts.get(0));
+		assertEquals(CppPart.AddToFunctionName(new Token("a")), parts.get(1));
+		assertEquals(CppPart.Assignment(), parts.get(2));
+		assertEquals(CppPart.EndOfGlobalStatement(), parts.get(3));
 	}
 	
 	private Iterable<Token> getTokens(String[] strs) {

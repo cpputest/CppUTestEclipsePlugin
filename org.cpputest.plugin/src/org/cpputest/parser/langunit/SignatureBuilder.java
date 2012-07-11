@@ -48,7 +48,8 @@ public class SignatureBuilder {
 		else if (currentDecidedReturnType.equals("const"))
 			addToReturnType(partOfFunctionDeclaration);
 		else if (hasFunctionName) {
-			return false;
+			addToReturnType(signature.getFunctionName());
+			signature.setFunctionName(partOfFunctionDeclaration);
 		}
 		else if (partOfFunctionDeclaration.equals("*"))
 			addToReturnType(partOfFunctionDeclaration);

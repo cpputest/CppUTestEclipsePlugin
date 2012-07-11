@@ -6,7 +6,7 @@ import org.cpputest.parser.parts.impl.parts.CppPart;
 
 public class CppTokensToPotentialLanguagePartsTranslator{
 	private enum State {
-		GLOBAL, DEC, NAMESPACE, DEC_TO_IMP, IMP, FUNCTION_NAME, TYPEDEF
+		GLOBAL, DEC, NAMESPACE, DEC_TO_IMP, IMP, FUNCTION_NAME, TYPEDEF, GLOBAL_ASSIGNMENT
 	}
     public CppTokensToPotentialLanguagePartsTranslator() {
 	}
@@ -66,6 +66,8 @@ public class CppTokensToPotentialLanguagePartsTranslator{
 				return _GLOBAL(token);
 			case FUNCTION_NAME:
 				return _GLOBAL(token);
+			case GLOBAL_ASSIGNMENT:
+				return _GLOBAL_ASSIGNMENT(token);
 			case DEC:
 				return _DEC(token);
 			case NAMESPACE:
@@ -81,7 +83,11 @@ public class CppTokensToPotentialLanguagePartsTranslator{
 		}
 	    
 		private CppPart _GLOBAL(Token token){
-	        if (token.isTypeDef()) {
+	        if (token.isAssignment()) {
+	        	set_state(State.GLOBAL_ASSIGNMENT);
+	            return CppPart.Assignment();
+	        }
+	        else if (token.isTypeDef()) {
 	        	set_state(State.TYPEDEF);
 	            return CppPart.Typedef();
 	        }
@@ -94,7 +100,7 @@ public class CppTokensToPotentialLanguagePartsTranslator{
 	        	set_state(State.NAMESPACE);
 	        else if (token.isSemicolon()) {
 	        	set_state(State.GLOBAL);
-	        	return CppPart.EndOfGlobalStatement(token);
+	        	return CppPart.EndOfGlobalStatement();
 	        }
 	        else {
 	        	if (get_state() == State.FUNCTION_NAME)
@@ -104,6 +110,13 @@ public class CppTokensToPotentialLanguagePartsTranslator{
 	        }
 	        return null;
 	    }
+		private CppPart _GLOBAL_ASSIGNMENT(Token token) {
+	        if (token.isSemicolon()) {
+	        	set_state(State.GLOBAL);
+	        	return CppPart.EndOfGlobalStatement();
+	        }
+			return null;
+		}
 		private CppPart _TYPEDEF(Token token) {
 			if (token.isSemicolon())
 	        	set_state(State.GLOBAL);

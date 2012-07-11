@@ -27,7 +27,7 @@ public class SignatureBuilderTest {
 				.addToFunctionDeclaration("int")
 				.addToFunctionDeclaration("fun")
 				.build();
-		assertEquals("int fun()", signature.getCode().toString());
+		assertEquals("MACRO int fun()", signature.getCode().toString());
 	}
 	@Test
 	public void testConstReturnType() {
@@ -46,7 +46,7 @@ public class SignatureBuilderTest {
 				.addToFunctionDeclaration("fun")
 				.build();
 		assertEquals("fun", signature.getFunctionName());
-		assertEquals("int * fun()", signature.getCode().toString());
+		assertEquals("EXTRA int * fun()", signature.getCode().toString());
 	}
 
 }
