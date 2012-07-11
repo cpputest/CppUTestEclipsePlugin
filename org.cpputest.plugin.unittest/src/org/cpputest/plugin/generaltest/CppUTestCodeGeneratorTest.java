@@ -2,9 +2,9 @@ package org.cpputest.plugin.generaltest;
 
 import static org.junit.Assert.*;
 
+import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppUTestCodeGenerator;
 import org.cpputest.codeGenerator.Stubber;
-import org.cpputest.parser.CppCode;
 import org.cpputest.parser.SourceCodeReader;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
 import org.jmock.Expectations;

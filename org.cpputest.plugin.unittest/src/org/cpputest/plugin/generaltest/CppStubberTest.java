@@ -2,8 +2,8 @@ package org.cpputest.plugin.generaltest;
 
 import static org.junit.Assert.*;
 
+import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppStubber;
-import org.cpputest.parser.CppCode;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
 import org.cpputest.parser.langunit.SignatureBuilder;
 import org.junit.Test;
