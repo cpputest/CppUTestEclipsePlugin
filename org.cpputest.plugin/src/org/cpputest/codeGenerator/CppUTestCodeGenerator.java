@@ -20,4 +20,13 @@ public class CppUTestCodeGenerator implements UnitTestCodeGenerator {
 		
 		return stubCode;
 	}
+
+	@Override
+	public CppCode getEmptyStubOfCodeAtPosition(String allCode, int offset) {
+		for(CppLangFunctionSignature sig: signatures.signatures(allCode))
+			if (sig.isOffsetInclusive(offset))
+				return stubber.getEmptyCStub(sig);
+		
+		return new CppCode();
+	}
 }

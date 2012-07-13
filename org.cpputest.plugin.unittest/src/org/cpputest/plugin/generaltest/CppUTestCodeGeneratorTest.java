@@ -6,7 +6,10 @@ import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppUTestCodeGenerator;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.parser.SourceCodeReader;
+import org.cpputest.parser.impl.Token;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
+import org.cpputest.parser.langunit.SignatureBuilder;
+import org.eclipse.jface.text.Position;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -40,44 +43,29 @@ public class CppUTestCodeGeneratorTest {
 		CppUTestCodeGenerator cpputest = new CppUTestCodeGenerator(reader, stubber);
 		assertEquals(expected_code, cpputest.getEmptyStubOfCode(SOURCE_CODE));
 	}
-//	public void testNoFunctionFound() {
-//		assertEquals("",getEmptyCStrubOfCode(""));
-//	}
-//	@Test
-//	public void testGenerateSimpleFunction() {
-//		assertEquals("void foo(){}\n",getEmptyCStrubOfCode("void foo();"));
-//	}
-//	@Test
-//	public void testGenerateWithIntReturnType() {
-//		assertEquals("int foo(){return 0;}\n",getEmptyCStrubOfCode("int foo();"));
-//	}
-//	@Test
-//	public void testGenerateWithOtherReturnType() {
-//		assertEquals("BYTE foo(){return 0;}\n",getEmptyCStrubOfCode("BYTE foo();"));
-//	}
-//	@Test
-//	public void testGenerateWithPointerReturnType() {
-//		assertEquals("TYPE * foo(){return 0;}\n",getEmptyCStrubOfCode("TYPE * foo();"));
-//	}
-//	@Ignore("next")
-//	@Test
-//	public void testGenerateWithVoidPointerReturnType() {
-//		assertEquals("void * foo(){return 0;}\n",getEmptyCStrubOfCode("void * foo();"));
-//	}
-//	@Test
-//	public void testGenerateWithReferenceType() {
-//		assertEquals("TYPE & foo(){static TYPE t;return t;}\n",getEmptyCStrubOfCode("TYPE & foo();"));
-//	}
-//	@Test
-//	public void testGenerateWithParameter() {
-//		assertEquals("TYPE & foo(int a){static TYPE t;return t;}\n",getEmptyCStrubOfCode("TYPE & foo(int a);"));
-//	}
-//	@Test
-//	public void testGenerateWithVoidParameter() {
-//		assertEquals("void foo(void){}\n",getEmptyCStrubOfCode("void foo(void);"));
-//	}
-//	@Test
-//	public void testGenerateMultipleFunctions() {
-//		assertEquals("void foo(){}\nint bar(){return 0;}\n",getEmptyCStrubOfCode("void foo();int bar();"));
-//	}
+	@Test
+	public void testGenerateEmptyAtPosition() {
+		final int OFFSET = 10;
+		final SourceCodeReader reader = context.mock(SourceCodeReader.class);
+		final Stubber stubber = context.mock(Stubber.class);
+		final Iterable<?> units = context.mock(Iterable.class);
+		final CppLangFunctionSignature s1 = new SignatureBuilder("void")
+				.withBeginOffset(OFFSET-4)
+				.addToFunctionDeclaration(Token.token("foo"))
+				.withEndOffset(OFFSET - 2)
+				.build();
+		final CppLangFunctionSignature s2 = new SignatureBuilder("void")
+				.withBeginOffset(OFFSET-1)
+				.addToFunctionDeclaration(Token.token("bar"))
+				.withEndOffset(OFFSET + 1)
+				.build();
+		context.checking(new Expectations() {{
+			oneOf(reader).signatures(SOURCE_CODE); will(returnValue(units));
+			oneOf(units).iterator(); will(returnIterator(s1,s2));
+			oneOf(stubber).getEmptyCStub(s2); will(returnValue(code2));
+		}});
+		
+		CppUTestCodeGenerator cpputest = new CppUTestCodeGenerator(reader, stubber);
+		assertEquals(code2, cpputest.getEmptyStubOfCodeAtPosition(SOURCE_CODE, OFFSET));
+	}
 }

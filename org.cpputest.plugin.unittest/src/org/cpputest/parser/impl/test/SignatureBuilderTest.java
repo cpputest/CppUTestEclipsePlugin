@@ -8,6 +8,8 @@ import org.junit.Test;
 
 public class SignatureBuilderTest {
 
+	private static final int END_OFFSET = 15;
+	private static final int BEGIN_OFFSET = 10;
 	@Test
 	public void testBuildFunctionWithoutParameterAndVoidReturnType() {
 		CppLangFunctionSignature signature = new SignatureBuilder("void")
@@ -47,6 +49,18 @@ public class SignatureBuilderTest {
 				.build();
 		assertEquals("fun", signature.getFunctionName());
 		assertEquals("EXTRA int * fun()", signature.getCode().toString());
+	}
+	@Test
+	public void testBuildWithOffsetInforamtion() {
+		CppLangFunctionSignature signature = new SignatureBuilder("void")
+				.withBeginOffset(BEGIN_OFFSET)
+				.addToFunctionDeclaration("foo")
+				.withEndOffset(END_OFFSET)
+				.build();
+		assertFalse(signature.isOffsetInclusive(BEGIN_OFFSET - 1));
+		assertTrue(signature.isOffsetInclusive(BEGIN_OFFSET));
+		assertTrue(signature.isOffsetInclusive(END_OFFSET));
+		assertFalse(signature.isOffsetInclusive(END_OFFSET + 1));
 	}
 
 }

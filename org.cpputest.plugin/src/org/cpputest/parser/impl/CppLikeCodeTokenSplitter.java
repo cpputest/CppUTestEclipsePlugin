@@ -29,7 +29,6 @@ public class CppLikeCodeTokenSplitter {
 		private final String sourceCode;
 	    private boolean in_middle_of_empty_lines = false;
 	    private int currentIndexInCode = 0;
-	    private int currentLine = 1;
 	    private final Matcher m;
 		public TokenIterator(String string) {
 			this.sourceCode = string;
@@ -68,12 +67,13 @@ public class CppLikeCodeTokenSplitter {
 		}
 		private Token generateTokensFromCodeWithMultipleNewlines(){
 		    while (true) {
+		    	int currentTokenOffset = currentIndexInCode;
 		        if(!m.find(currentIndexInCode))
 		            break;
 		        String token = m.group(0);
 		        if (token.equals("\n")) {
 		            currentIndexInCode = currentIndexInCode + 1;
-	        		currentLine += 1;
+	        		currentTokenOffset += 1;
 		        }
 		        else if (token.startsWith("#")){
 		            while(true){
@@ -117,9 +117,8 @@ public class CppLikeCodeTokenSplitter {
 		        }
 		        else
 		            currentIndexInCode = m.end(0);
-		        currentLine += (token.split("\n").length - 1);
 		        if (!Character.isWhitespace(token.charAt(0)) && token.charAt(0) != '#')
-		            return new Token(token, currentLine);
+		            return new Token(token, currentTokenOffset);
 		        
 		    }
 			return null;

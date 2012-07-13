@@ -12,4 +12,9 @@ public class CppLangFunctionImplementation implements LanguageUnit {
 		return null;
 	}
 
+	@Override
+	public boolean isOffsetInclusive(int offset) {
+		return false;
+	}
+
 }

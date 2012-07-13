@@ -6,4 +6,6 @@ public interface LanguageUnit {
 
 	CppCode getCode();
 
+	boolean isOffsetInclusive(int offset);
+
 }

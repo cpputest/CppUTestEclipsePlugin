@@ -43,10 +43,12 @@ public class CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator{
 				CppPart part = parts.next();
 				switch (part.getType()) {
 				case END_OF_FUNCTION_SIGNATURE:
+					signatureBuilder.withEndOffset(part.getEndOffset());
 					if (signatureBuilder.isComplete())
 						return signatureBuilder.build();
 				case MAYBE_NEW_FUNCTION:
 					signatureBuilder = new SignatureBuilder(part.codeString());
+					signatureBuilder.withBeginOffset(part.getBeginOffset());
 					break;
 				case MAYBE_PART_OF_FUNCTION_NAME:
 					signatureBuilder

@@ -4,6 +4,7 @@ import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppCodeFormater;
 import org.cpputest.codeGenerator.CppUTestPlatform;
 import org.cpputest.codeGenerator.UnitTestCodeGenerator;
+import org.eclipse.jface.text.Position;
 
 public class CppUTestActions implements Actions {
 	public CppUTestPlatform platform;
@@ -19,6 +20,11 @@ public class CppUTestActions implements Actions {
 	public void copyEmptyStubOfSelectedCodeToClipboard() {
 		String code = platform.getSelectedText();
 		CppCode stubCode = codeGenerator.getEmptyStubOfCode(code);
+		if (stubCode.isEmpty()) { 
+			String allCode = platform.getFullText();
+			Position pos = platform.getCursorPosition();
+			stubCode = codeGenerator.getEmptyStubOfCodeAtPosition(allCode, pos.offset);
+		}
 		if (!stubCode.isEmpty()) { 
 			String stub = formater.format(stubCode);
 			platform.copyToClipboard(stub);

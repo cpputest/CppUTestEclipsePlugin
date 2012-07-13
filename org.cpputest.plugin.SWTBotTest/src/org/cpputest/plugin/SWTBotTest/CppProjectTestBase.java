@@ -20,12 +20,14 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsInstanceOf;
 import static org.eclipse.swtbot.eclipse.finder.matchers.WidgetMatcherFactory.withPartName;
+import static org.junit.Assert.assertTrue;
 
 public class CppProjectTestBase {
 	SWTWorkbenchBot bot = new SWTWorkbenchBot();
@@ -44,6 +46,16 @@ public class CppProjectTestBase {
 
 	protected void deleteProject(String projectName) throws CoreException {
 		root.getProject(projectName).delete(true, true, new NullProgressMonitor());
+	}
+	
+	protected void clearClipboard() {
+		syncExec(new VoidResult() {
+			public void run() {
+				Clipboard clipboard = new Clipboard(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell().getDisplay());
+				clipboard.clearContents();
+			}
+		});
 	}
 
 	protected String getClipboardContent() {
@@ -69,7 +81,16 @@ public class CppProjectTestBase {
 		});
 		
 	}
+	protected void shouldSeeUnableToGenerateStubMessagebox(String string) {
+		SWTBotShell shell = bot.shell("CppUTest");
+		shell.activate();
+		assertTrue(null != bot.label(string));
+		bot.button("OK").click();
+	}
 
+	protected void fireTheCopyEmptyStubToClipboardMenuItem() {
+		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();
+	}
 	@SuppressWarnings("unchecked")
 	protected SWTBotEclipseEditor createNewCppFile(String projectName, String fileName, String content) throws CoreException {
 		IProject project = root.getProject(projectName);

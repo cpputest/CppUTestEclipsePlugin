@@ -80,4 +80,10 @@ public class CppPart {
 	public String codeString() {
 		return token.toString();
 	}
+	public int getEndOffset() {
+		return this.token.getEndOffset();
+	}
+	public int getBeginOffset() {
+		return this.token.getBeginOffset();
+	}
 }

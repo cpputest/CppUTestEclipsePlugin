@@ -7,12 +7,10 @@ import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.utils.SWTBotPreferences;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,9 +20,9 @@ public class EmptyCStubTest extends CppProjectTestBase {
 	private static final String GENERAL_PROJECT_FOR_TESTING = "GeneralProjectForTesting";
 
 	@Before
-	public void setupProject() throws CoreException {
-		bot.perspectiveByLabel("C/C++").activate();
+	public void setupProjectAndClearClipboard() throws CoreException {
 		createCppProject(GENERAL_PROJECT_FOR_TESTING);
+		clearClipboard();
 	}
 	@After
 	public void cleanProject() throws CoreException{
@@ -65,23 +63,9 @@ public class EmptyCStubTest extends CppProjectTestBase {
 		assertEquals("void fun4(void){}\n", getClipboardContent());
 	}
 
-	@Ignore("still under development")
-	@Test
-	public void testStillAbleToCreateStubWhenSelectedPartOfTheSignature() throws CoreException {
-		copyEmptyStubOfCodeToClipboard("// /* \n void //\"\nfun5(void//xxx\n)//\n;//\n");
-		assertEquals("void fun5(void){}\n", getClipboardContent());
-	}
-
-	private void shouldSeeUnableToGenerateStubMessagebox(String string) {
-		SWTBotShell shell = bot.shell("CppUTest");
-		shell.activate();
-		assertTrue(null != bot.label(string));
-		bot.button("OK").click();
-	
-	}
 	protected void copyEmptyStubOfCodeToClipboard(String signature) throws CoreException {
 		SWTBotEclipseEditor editor = createNewCppFile(GENERAL_PROJECT_FOR_TESTING, "example.h", signature);
 		editor.selectRange(0,0,1000);
-		bot.menu("CppUTest").menu("Copy Empty Stub To Clipboard").click();		
+		fireTheCopyEmptyStubToClipboardMenuItem();
 	}
 }

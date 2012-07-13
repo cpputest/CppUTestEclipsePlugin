@@ -27,6 +27,16 @@ public class CppLikeCodeTokenSplitterTest {
 		assertEquals("int", tokens.get(0).toString());
 	}
 	@Test
+	public void firstTokenOffsetShouldBe0() {
+		List<Token> tokens = tokenize("int");
+		assertEquals(0, tokens.get(0).getBeginOffset());
+	}
+	@Test
+	public void firstTokenOffsetShouldBe1IfThereIsASpaceBeforeIt() {
+		List<Token> tokens = tokenize(" int");
+		assertEquals(1, tokens.get(0).getBeginOffset());
+	}
+	@Test
 	public void testFunction() {
 		List<Token> tokens = tokenize("int fun(){}");
 		assertEquals(6, tokens.size());

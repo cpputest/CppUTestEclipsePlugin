@@ -11,6 +11,8 @@ public class CppLangFunctionSignature implements LanguageUnit {
 	private String functionName;
 	private String returnType;
 	private List<String> parameters = new ArrayList<String>();
+	private int beginOffset;
+	private int endOffset;
 
 	public CppLangFunctionSignature(String currentFun) {
 		this.currentFun = currentFun;
@@ -60,6 +62,17 @@ public class CppLangFunctionSignature implements LanguageUnit {
 	      sb.append(item);
 	   }
 	   return sb.toString();
+	}
+
+	@Override
+	public boolean isOffsetInclusive(int offset) {
+		return beginOffset <= offset && endOffset >= offset;
+	}
+
+	public void setBeginAndEndOffsets(int beginOffset, int endOffset) {
+		this.beginOffset = beginOffset;
+		this.endOffset = endOffset;
+		
 	}	
 
 }

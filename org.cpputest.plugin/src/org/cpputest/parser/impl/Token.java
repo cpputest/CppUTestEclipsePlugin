@@ -28,16 +28,16 @@ public class Token {
 	}
 
 	private String token;
-	private final int line;
+	private final int offset;
 
-	public Token(String token, int currentLine) {
+	public Token(String token, int offset) {
 		this.token = token;
-		this.line = currentLine;
+		this.offset = offset;
 	}
 
 	public Token(String token) {
 		this.token = token;
-		this.line = 0;
+		this.offset = 0;
 	}
 
 	@Override
@@ -93,5 +93,21 @@ public class Token {
 	public boolean isAssignment() {
 		return token.equals("=");
 	}
+
+	public static Token token(String string, int offset) {
+		return new Token(string, offset);
+	}
+
+	public static Token token(String string) {
+		return new Token(string);
+	}
+	public int getBeginOffset() {
+		return offset;
+	}
+
+	public int getEndOffset() {
+		return offset;
+	}
+
 
 }

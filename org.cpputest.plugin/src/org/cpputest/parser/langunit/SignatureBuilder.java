@@ -3,24 +3,39 @@ package org.cpputest.parser.langunit;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.cpputest.parser.impl.Token;
+
 public class SignatureBuilder {
 	CppLangFunctionSignature signature;
 	private String currentDecidedReturnType = "";
 	private boolean hasReturnType = false;
 	private boolean hasFunctionName = false;
 	private Queue<String> tokensBeforeFunctionNameDecided = new LinkedList<String>();
+	private int beginOffset;
+	private int endOffset;
 	
 	public SignatureBuilder(String possibleReturnType) {
 		signature = new CppLangFunctionSignature("");
 		addToFunctionDeclaration(possibleReturnType);
-		
 	}
 	public CppLangFunctionSignature build() {
+		signature.setBeginAndEndOffsets(beginOffset, endOffset);
 		return signature;
+	}
+	public SignatureBuilder withBeginOffset(int beginOffset) {
+		this.beginOffset = beginOffset;
+		return this;
+	}
+	public SignatureBuilder withEndOffset(int endOffset){
+		this.endOffset = endOffset;
+		return this;
 	}
 	public SignatureBuilder addToFunctionDeclaration(String partOfFunctionDeclaration) {
 		tokensBeforeFunctionNameDecided.add(partOfFunctionDeclaration);
 		addToReturnTypeAndFunctionName();
+		return this;
+	}
+	public SignatureBuilder addToFunctionDeclaration(Token token2) {
 		return this;
 	}
 	private void addToReturnTypeAndFunctionName() {

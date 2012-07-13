@@ -12,6 +12,8 @@ import org.cpputest.parser.parts.impl.parts.CppPart;
 import org.junit.Test;
 
 public class CppFunctionSignatureReadingTest {
+	private static final int BEGIN_OFFSET = 11;
+	private static final int END_OFFSET = 18;
 	List<LanguageUnit> units;
 	List<CppPart> parts = new ArrayList<CppPart>(); 
 	@Test
@@ -91,6 +93,7 @@ public class CppFunctionSignatureReadingTest {
 		assertEquals(1, units.size());
 		assertEquals("const int foo()", units.get(0).getCode().toString());
 	}
+	@Test
 	public void testFunctionPointerIsNotASignature() {
 		parts.add(CppPart.StartNewFunction(new Token("int")));
 		parts.add(CppPart.Parameter(new Token("*")));
@@ -98,6 +101,17 @@ public class CppFunctionSignatureReadingTest {
 		parts.add(CppPart.EndOfFunctionSignature(new Token(")")));
 		units = getLanguageUnits(parts);
 		assertEquals(0, units.size());
+	}
+	@Test
+	public void testBeginAndEndOffsetOfFunctionSignature() {
+		parts.add(CppPart.StartNewFunction(Token.token("int", BEGIN_OFFSET)));
+		parts.add(CppPart.AddToFunctionName(new Token("foo")));
+		parts.add(CppPart.EndOfFunctionSignature(Token.token(")", END_OFFSET)));
+		LanguageUnit unit = getLanguageUnits(parts).get(0);
+		assertFalse(unit.isOffsetInclusive(BEGIN_OFFSET-1));
+		assertTrue(unit.isOffsetInclusive(BEGIN_OFFSET));
+		assertFalse(unit.isOffsetInclusive(END_OFFSET+1));
+		
 	}
 	
 	private List<LanguageUnit> getLanguageUnits(Iterable<CppPart> parts) {
