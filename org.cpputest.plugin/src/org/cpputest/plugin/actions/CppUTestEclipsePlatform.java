@@ -1,11 +1,11 @@
 package org.cpputest.plugin.actions;
 
 import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.SourceCodeResource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.Position;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -15,7 +15,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
-public class CppUTestEclipsePlatform implements CppUTestPlatform {
+public class CppUTestEclipsePlatform implements CppUTestPlatform, SourceCodeResource {
 	private static final String PLUGIN_NAME = "CppUTest";
 	IWorkbenchWindow workbenchWindow;
 
@@ -66,11 +66,11 @@ public class CppUTestEclipsePlatform implements CppUTestPlatform {
 	}
 
 	@Override
-	public Position getCursorPosition() {
+	public int getCursorPosition() {
 		ISelectionService ss = workbenchWindow.getSelectionService();
 		ISelection selection = ss.getSelection();
 		ITextSelection txt = (ITextSelection) selection;
-		return new Position(txt.getOffset());
+		return txt.getOffset();
 	}
 
 }

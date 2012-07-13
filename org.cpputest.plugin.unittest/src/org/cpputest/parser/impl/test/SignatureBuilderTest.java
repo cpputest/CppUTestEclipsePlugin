@@ -3,7 +3,6 @@ package org.cpputest.parser.impl.test;
 import static org.junit.Assert.*;
 
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
-import org.cpputest.parser.langunit.SignatureBuilder;
 import org.junit.Test;
 
 public class SignatureBuilderTest {
@@ -12,20 +11,20 @@ public class SignatureBuilderTest {
 	private static final int BEGIN_OFFSET = 10;
 	@Test
 	public void testBuildFunctionWithoutParameterAndVoidReturnType() {
-		CppLangFunctionSignature signature = new SignatureBuilder("void")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("void")
 				.addToFunctionDeclaration("fun").build();
 		assertEquals("void fun()", signature.getCode().toString());
 	}
 	@Test
 	public void testBuildFunctionWithoutParameterAndPointerReturnType() {
-		CppLangFunctionSignature signature = new SignatureBuilder("int")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("int")
 				.addToFunctionDeclaration("*")
 				.addToFunctionDeclaration("fun").build();
 		assertEquals("int * fun()", signature.getCode().toString());
 	}
 	@Test
 	public void testMoveFunctionNameToReturnTypeWhenAddToFunctionNameMoreThanOnce() {
-		CppLangFunctionSignature signature = new SignatureBuilder("MACRO")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("MACRO")
 				.addToFunctionDeclaration("int")
 				.addToFunctionDeclaration("fun")
 				.build();
@@ -33,7 +32,7 @@ public class SignatureBuilderTest {
 	}
 	@Test
 	public void testConstReturnType() {
-		CppLangFunctionSignature signature = new SignatureBuilder("const")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("const")
 				.addToFunctionDeclaration("int")
 				.addToFunctionDeclaration("fun")
 				.build();
@@ -42,7 +41,7 @@ public class SignatureBuilderTest {
 	}
 	@Test
 	public void testExtraStuffBeforePointerReturnType() {
-		CppLangFunctionSignature signature = new SignatureBuilder("EXTRA")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("EXTRA")
 				.addToFunctionDeclaration("int")
 				.addToFunctionDeclaration("*")
 				.addToFunctionDeclaration("fun")
@@ -52,7 +51,7 @@ public class SignatureBuilderTest {
 	}
 	@Test
 	public void testBuildWithOffsetInforamtion() {
-		CppLangFunctionSignature signature = new SignatureBuilder("void")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("void")
 				.withBeginOffset(BEGIN_OFFSET)
 				.addToFunctionDeclaration("foo")
 				.withEndOffset(END_OFFSET)

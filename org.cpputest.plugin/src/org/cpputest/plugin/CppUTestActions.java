@@ -3,28 +3,20 @@ package org.cpputest.plugin;
 import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppCodeFormater;
 import org.cpputest.codeGenerator.CppUTestPlatform;
-import org.cpputest.codeGenerator.UnitTestCodeGenerator;
-import org.eclipse.jface.text.Position;
 
 public class CppUTestActions implements Actions {
-	public CppUTestPlatform platform;
-	public UnitTestCodeGenerator codeGenerator;
-	public CppCodeFormater formater;
+	public final CppUTestPlatform platform;
+	public SourceCodeStubber sourceCodeStubber;
+	public final CppCodeFormater formater;
 
-	public CppUTestActions(CppUTestPlatform platform, UnitTestCodeGenerator codeGenerator, CppCodeFormater formater) {
+	public CppUTestActions(CppUTestPlatform platform, SourceCodeStubber sourceCodeStubber, CppCodeFormater formater) {
 		this.platform = platform;
-		this.codeGenerator = codeGenerator;
+		this.sourceCodeStubber = sourceCodeStubber;
 		this.formater = formater;
 	}
 	@Override
 	public void copyEmptyStubOfSelectedCodeToClipboard() {
-		String code = platform.getSelectedText();
-		CppCode stubCode = codeGenerator.getEmptyStubOfCode(code);
-		if (stubCode.isEmpty()) { 
-			String allCode = platform.getFullText();
-			Position pos = platform.getCursorPosition();
-			stubCode = codeGenerator.getEmptyStubOfCodeAtPosition(allCode, pos.offset);
-		}
+		CppCode stubCode = sourceCodeStubber.getEmptyStubOfCodeInEditor();
 		if (!stubCode.isEmpty()) { 
 			String stub = formater.format(stubCode);
 			platform.copyToClipboard(stub);
@@ -32,5 +24,4 @@ public class CppUTestActions implements Actions {
 		else
 			platform.messageBox("No function is selected.");
 	}
-	
 }

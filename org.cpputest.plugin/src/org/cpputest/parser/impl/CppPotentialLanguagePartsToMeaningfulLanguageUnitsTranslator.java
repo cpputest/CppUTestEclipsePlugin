@@ -2,8 +2,9 @@ package org.cpputest.parser.impl;
 
 import java.util.Iterator;
 
+import org.cpputest.parser.langunit.CppLangFunctionSignature;
 import org.cpputest.parser.langunit.LanguageUnit;
-import org.cpputest.parser.langunit.SignatureBuilder;
+import org.cpputest.parser.langunit.CppLangFunctionSignature.SignatureBuilder;
 import org.cpputest.parser.parts.impl.parts.CppPart;
 
 public class CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator{
@@ -11,7 +12,7 @@ public class CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator{
 	}
 
 	public class LanguageUnitIterator implements Iterator<LanguageUnit> {
-		private SignatureBuilder signatureBuilder = new SignatureBuilder("");
+		private SignatureBuilder signatureBuilder = CppLangFunctionSignature.builderStartWith("");
 		private LanguageUnit nextValue = null;
 		private final Iterator<CppPart> parts;
 
@@ -47,7 +48,7 @@ public class CppPotentialLanguagePartsToMeaningfulLanguageUnitsTranslator{
 					if (signatureBuilder.isComplete())
 						return signatureBuilder.build();
 				case MAYBE_NEW_FUNCTION:
-					signatureBuilder = new SignatureBuilder(part.codeString());
+					signatureBuilder = CppLangFunctionSignature.builderStartWith(part.codeString());
 					signatureBuilder.withBeginOffset(part.getBeginOffset());
 					break;
 				case MAYBE_PART_OF_FUNCTION_NAME:

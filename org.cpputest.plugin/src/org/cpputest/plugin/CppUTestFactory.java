@@ -11,10 +11,11 @@ public class CppUTestFactory {
 	static public CppUTestActionRunner createCppUTestCodeGeneratorActions(IWorkbenchWindow window) {
 		CppSourceCodeReader reader = new CppSourceCodeReader();
 		CppStubber stubber = new CppStubber();
-		CppUTestEclipsePlatform platform = new CppUTestEclipsePlatform(window);
+		CppUTestEclipsePlatform eclipse = new CppUTestEclipsePlatform(window);
 		CppUTestCodeGenerator codeGenerator = new CppUTestCodeGenerator(reader, stubber);
+		SourceCodeStubber sourceCodeStubber = new CppUTestSourceCodeStubber(eclipse, codeGenerator);
 		CompactCppCodeFormater formater = new CompactCppCodeFormater();
-		return new CppUTestActionRunner(new CppUTestActions(platform, codeGenerator, formater));
+		return new CppUTestActionRunner(new CppUTestActions(eclipse, sourceCodeStubber, formater));
 	}
 
 }

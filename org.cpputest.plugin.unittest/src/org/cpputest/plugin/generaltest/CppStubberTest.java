@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppStubber;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
-import org.cpputest.parser.langunit.SignatureBuilder;
 import org.junit.Test;
 
 public class CppStubberTest {
@@ -13,7 +12,7 @@ public class CppStubberTest {
 
 	@Test
 	public void testVoidFunctionWithoutParameter() {
-		CppLangFunctionSignature signature = signatureBuilder("void")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("void")
 				.addToFunctionDeclaration("fun")
 				.build();
 		
@@ -24,7 +23,7 @@ public class CppStubberTest {
 
 	@Test
 	public void testFunctionWithoutParameterReturnsInt() {
-		CppLangFunctionSignature signature = signatureBuilder("int")
+		CppLangFunctionSignature signature = CppLangFunctionSignature.builderStartWith("int")
 				.addToFunctionDeclaration("foo")
 				.build();
 		
@@ -33,8 +32,4 @@ public class CppStubberTest {
 		assertEquals("int foo(){return 0;}\n", stub.toString());
 	}
 	
-	private SignatureBuilder signatureBuilder(String returnType) {
-		return new SignatureBuilder(returnType);
-	}
-
 }

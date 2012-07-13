@@ -8,8 +8,6 @@ import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.parser.SourceCodeReader;
 import org.cpputest.parser.impl.Token;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
-import org.cpputest.parser.langunit.SignatureBuilder;
-import org.eclipse.jface.text.Position;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -30,8 +28,8 @@ public class CppUTestCodeGeneratorTest {
 		final SourceCodeReader reader = context.mock(SourceCodeReader.class);
 		final Stubber stubber = context.mock(Stubber.class);
 		final Iterable<?> units = context.mock(Iterable.class);
-		final CppLangFunctionSignature s1 = new CppLangFunctionSignature(null);
-		final CppLangFunctionSignature s2 = new CppLangFunctionSignature(null);
+		final CppLangFunctionSignature s1 = CppLangFunctionSignature.builderStartWith(null).build();
+		final CppLangFunctionSignature s2 = CppLangFunctionSignature.builderStartWith(null).build();
 		
 		context.checking(new Expectations() {{
 			oneOf(reader).signatures(SOURCE_CODE); will(returnValue(units));
@@ -49,12 +47,12 @@ public class CppUTestCodeGeneratorTest {
 		final SourceCodeReader reader = context.mock(SourceCodeReader.class);
 		final Stubber stubber = context.mock(Stubber.class);
 		final Iterable<?> units = context.mock(Iterable.class);
-		final CppLangFunctionSignature s1 = new SignatureBuilder("void")
+		final CppLangFunctionSignature s1 = CppLangFunctionSignature.builderStartWith("void")
 				.withBeginOffset(OFFSET-4)
 				.addToFunctionDeclaration(Token.token("foo"))
 				.withEndOffset(OFFSET - 2)
 				.build();
-		final CppLangFunctionSignature s2 = new SignatureBuilder("void")
+		final CppLangFunctionSignature s2 = CppLangFunctionSignature.builderStartWith("void")
 				.withBeginOffset(OFFSET-1)
 				.addToFunctionDeclaration(Token.token("bar"))
 				.withEndOffset(OFFSET + 1)
