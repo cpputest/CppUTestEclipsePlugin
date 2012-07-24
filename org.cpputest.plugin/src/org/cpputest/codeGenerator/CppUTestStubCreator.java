@@ -3,29 +3,28 @@ package org.cpputest.codeGenerator;
 import org.cpputest.parser.SourceCodeReader;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
 
-public class CppUTestCodeGenerator implements UnitTestCodeGenerator {
+public class CppUTestStubCreator implements WhoCreateStubFromSourceCode {
 	private final SourceCodeReader signatures;
-	private final Stubber stubber;
 
-	public CppUTestCodeGenerator(SourceCodeReader reader, Stubber stubber) {
+	public CppUTestStubCreator(SourceCodeReader reader) {
 		this.signatures = reader;
-		this.stubber = stubber;
 	}
 
 	@Override
-	public CppCode getEmptyStubOfCode(String sourceCode) {
+	public CppCode getStubOfCode(String sourceCode, Stubber stubber) {
 		CppCode stubCode = new CppCode();
 		for(CppLangFunctionSignature sig: signatures.signatures(sourceCode))
-			stubCode.append(stubber.getEmptyCStub(sig));
+			stubCode.append(stubber.getStubOfSignature(sig));
 		
 		return stubCode;
 	}
 
 	@Override
-	public CppCode getEmptyStubOfCodeAtPosition(String allCode, int offset) {
+	public CppCode getStubOfCodeAtPosition(String allCode, int offset,
+			Stubber stubber) {
 		for(CppLangFunctionSignature sig: signatures.signatures(allCode))
 			if (sig.isOffsetInclusive(offset))
-				return stubber.getEmptyCStub(sig);
+				return stubber.getStubOfSignature(sig);
 		
 		return new CppCode();
 	}

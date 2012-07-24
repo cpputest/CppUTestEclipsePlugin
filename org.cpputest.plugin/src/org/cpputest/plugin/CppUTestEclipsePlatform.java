@@ -1,4 +1,4 @@
-package org.cpputest.plugin.actions;
+package org.cpputest.plugin;
 
 import org.cpputest.codeGenerator.CppUTestPlatform;
 import org.cpputest.codeGenerator.SourceCodeResource;

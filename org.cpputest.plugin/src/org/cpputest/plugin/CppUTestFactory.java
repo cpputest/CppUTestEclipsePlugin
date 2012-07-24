@@ -1,21 +1,57 @@
 package org.cpputest.plugin;
 
 import org.cpputest.codeGenerator.CompactCppCodeFormater;
-import org.cpputest.codeGenerator.CppStubber;
-import org.cpputest.codeGenerator.CppUTestCodeGenerator;
+import org.cpputest.codeGenerator.CppCodeFormater;
+import org.cpputest.codeGenerator.CppDefaultMockStubber;
+import org.cpputest.codeGenerator.CppEmptyStubber;
+import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CppUTestStubCreator;
+import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.parser.CppSourceCodeReader;
-import org.cpputest.plugin.actions.CppUTestEclipsePlatform;
 import org.eclipse.ui.IWorkbenchWindow;
 
-public class CppUTestFactory {
-	static public CppUTestActionRunner createCppUTestCodeGeneratorActions(IWorkbenchWindow window) {
-		CppSourceCodeReader reader = new CppSourceCodeReader();
-		CppStubber stubber = new CppStubber();
-		CppUTestEclipsePlatform eclipse = new CppUTestEclipsePlatform(window);
-		CppUTestCodeGenerator codeGenerator = new CppUTestCodeGenerator(reader, stubber);
-		SourceCodeStubber sourceCodeStubber = new CppUTestSourceCodeStubber(eclipse, codeGenerator);
-		CompactCppCodeFormater formater = new CompactCppCodeFormater();
-		return new CppUTestActionRunner(new CppUTestActions(eclipse, sourceCodeStubber, formater));
+public class CppUTestFactory implements ICppUTestFactory {
+	private CppUTestEclipsePlatform platform = null;
+//	static public CppUTestActionRunnerForEclipseActions createCppUTestCodeGeneratorActions(IWorkbenchWindow window) {
+//		CppSourceCodeReader reader = new CppSourceCodeReader();
+//		CppStubber stubber = new CppStubber();
+//		CppUTestEclipsePlatform eclipse = new CppUTestEclipsePlatform(window);
+//		CppUTestStubCreator codeGenerator = new CppUTestStubCreator(reader, stubber);
+//		SourceCodeStubber sourceCodeStubber = new CppUTestSourceCodeStubber(eclipse, codeGenerator);
+//		CompactCppCodeFormater formater = new CompactCppCodeFormater();
+//		return new CppUTestActionRunnerForEclipseActions(new CppUTestStubbingActions(eclipse, sourceCodeStubber, formater));
+//	}
+
+	@Override
+	public CppUTestPlatform createPlatformAdaptor(IWorkbenchWindow window) {
+		platform = new CppUTestEclipsePlatform(window);
+		return platform;
 	}
 
+	@Override
+	public SourceCodeStubberForEditor createSourceCodeStubber() {
+		CppSourceCodeReader reader = new CppSourceCodeReader();
+		CppUTestStubCreator codeGenerator = new CppUTestStubCreator(reader);
+		return new CppUTestSourceCodeStubberForEditor(platform, codeGenerator);
+	}
+
+	@Override
+	public CppCodeFormater createCodeFormater() {
+		return new CompactCppCodeFormater();
+	}
+
+	@Override
+	public Stubber createEmptyStubber() {
+		return new CppEmptyStubber();
+	}
+
+	@Override
+	public StubCodeUI createStubCodeUI() {
+		return new CppUTestStubCodeUI(platform, createSourceCodeStubber(), createCodeFormater());
+	}
+
+	@Override
+	public Stubber createDefaultMockStubber() {
+		return new CppDefaultMockStubber();
+	}
 }

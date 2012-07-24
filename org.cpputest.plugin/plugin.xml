@@ -18,9 +18,15 @@
          <action
                label="Copy Empty Stub To Clipboard"
                icon="icons/sample.gif"
-               class="org.cpputest.plugin.actions.CppUTestAction"
+               class="org.cpputest.plugin.actions.CppUTestActionCopyEmptyStubToClipboard"
                menubarPath="cppUTestMenu/cppUTestGroup"
                id="org.cpputest.plugin.actions.CopyEmptyStubToClipboard">
+         </action>
+         <action
+               label="Copy Default Mock To Clipboard"
+               class="org.cpputest.plugin.actions.CppUTestActionCopyDefaultMockToClipboard"
+               menubarPath="cppUTestMenu/cppUTestGroup"
+               id="org.cpputest.plugin.actions.CopyDefaultMockToClipboard">
          </action>
       </actionSet>
    </extension>
@@ -39,7 +45,7 @@
             </separator>
          </menu>
          <action
-               class="org.cpputest.plugin.actions.CppUTestContextMenutActions"
+               class="org.cpputest.plugin.actions.CppUTestActionCopyEmptyStubToClipboard"
                enablesFor="1"
                id="org.cpputest.plugin.actions.CopyEmptyStubToClipboard"
                label="Copy Empty Stub To Clipboard"

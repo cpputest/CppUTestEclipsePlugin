@@ -1,24 +1,28 @@
 package org.cpputest.plugin.actions;
 
-import org.cpputest.plugin.ActionRunner;
+import org.cpputest.codeGenerator.CppUTestPlatform;
 import org.cpputest.plugin.CppUTestFactory;
+import org.cpputest.plugin.ICppUTestFactory;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.IObjectActionDelegate;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
-public class CppUTestAction implements IWorkbenchWindowActionDelegate {
-	private ActionRunner cpputestCodeGeneratorActions = null;
+public abstract class CppUTestAction implements IWorkbenchWindowActionDelegate, IObjectActionDelegate {
+	protected ICppUTestFactory factory = new CppUTestFactory();
+	private CppUTestPlatform platform;
 	public CppUTestAction() {
+		this.factory = new CppUTestFactory();
 	}
 
-	/* constructor for unit testing */
-	public CppUTestAction(ActionRunner cpputest) {
-		cpputestCodeGeneratorActions = cpputest;
+	public CppUTestAction(ICppUTestFactory factory) {
+		this.factory = factory;
 	}
 
-	public void run(IAction action) {
-		cpputestCodeGeneratorActions.run(action);
+	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
+		initializePlatform(targetPart.getSite().getWorkbenchWindow());
 	}
 
 	/**
@@ -41,7 +45,14 @@ public class CppUTestAction implements IWorkbenchWindowActionDelegate {
 	}
 
 	public void init(IWorkbenchWindow window) {
-		cpputestCodeGeneratorActions = CppUTestFactory.createCppUTestCodeGeneratorActions(window);
+		initializePlatform(window);
+	}
+
+	private void initializePlatform(IWorkbenchWindow window) {
+		this.platform = factory.createPlatformAdaptor(window);
+	}
+	protected CppUTestPlatform getPlatform() {
+		return this.platform;
 	}
 
 }

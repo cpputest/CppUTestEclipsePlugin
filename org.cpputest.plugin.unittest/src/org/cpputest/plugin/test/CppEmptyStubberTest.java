@@ -1,14 +1,15 @@
-package org.cpputest.plugin.generaltest;
+package org.cpputest.plugin.test;
 
 import static org.junit.Assert.*;
 
 import org.cpputest.codeGenerator.CppCode;
-import org.cpputest.codeGenerator.CppStubber;
+import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.parser.langunit.CppLangFunctionSignature;
+import org.cpputest.plugin.CppUTestFactory;
 import org.junit.Test;
 
-public class CppStubberTest {
-	CppStubber stubber = new CppStubber();
+public class CppEmptyStubberTest {
+	Stubber stubber = new CppUTestFactory().createEmptyStubber();
 
 	@Test
 	public void testVoidFunctionWithoutParameter() {
@@ -16,7 +17,7 @@ public class CppStubberTest {
 				.addToFunctionDeclaration("fun")
 				.build();
 		
-		CppCode stub = stubber.getEmptyCStub(signature);
+		CppCode stub = stubber.getStubOfSignature(signature);
 		
 		assertEquals("void fun(){}\n", stub.toString());
 	}
@@ -27,7 +28,7 @@ public class CppStubberTest {
 				.addToFunctionDeclaration("foo")
 				.build();
 		
-		CppCode stub = stubber.getEmptyCStub(signature);
+		CppCode stub = stubber.getStubOfSignature(signature);
 		
 		assertEquals("int foo(){return 0;}\n", stub.toString());
 	}

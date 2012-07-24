@@ -4,6 +4,6 @@ import org.cpputest.parser.langunit.CppLangFunctionSignature;
 
 public interface Stubber {
 
-	CppCode getEmptyCStub(CppLangFunctionSignature s1);
+	CppCode getStubOfSignature(CppLangFunctionSignature signature);
 
 }

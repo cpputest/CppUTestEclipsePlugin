@@ -1,9 +1,9 @@
-package org.cpputest.plugin.generaltest;
+package org.cpputest.plugin.test;
 
 import static org.junit.Assert.*;
 
 import org.cpputest.codeGenerator.CppCode;
-import org.cpputest.codeGenerator.CppUTestCodeGenerator;
+import org.cpputest.codeGenerator.CppUTestStubCreator;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.parser.SourceCodeReader;
 import org.cpputest.parser.impl.Token;
@@ -34,12 +34,12 @@ public class CppUTestCodeGeneratorTest {
 		context.checking(new Expectations() {{
 			oneOf(reader).signatures(SOURCE_CODE); will(returnValue(units));
 			oneOf(units).iterator(); will(returnIterator(s1,s2));
-			oneOf(stubber).getEmptyCStub(s1); will(returnValue(code1));
-			oneOf(stubber).getEmptyCStub(s2); will(returnValue(code2));
+			oneOf(stubber).getStubOfSignature(s1); will(returnValue(code1));
+			oneOf(stubber).getStubOfSignature(s2); will(returnValue(code2));
 		}});
 		
-		CppUTestCodeGenerator cpputest = new CppUTestCodeGenerator(reader, stubber);
-		assertEquals(expected_code, cpputest.getEmptyStubOfCode(SOURCE_CODE));
+		CppUTestStubCreator cpputest = new CppUTestStubCreator(reader);
+		assertEquals(expected_code, cpputest.getStubOfCode(SOURCE_CODE,stubber));
 	}
 	@Test
 	public void testGenerateEmptyAtPosition() {
@@ -60,10 +60,10 @@ public class CppUTestCodeGeneratorTest {
 		context.checking(new Expectations() {{
 			oneOf(reader).signatures(SOURCE_CODE); will(returnValue(units));
 			oneOf(units).iterator(); will(returnIterator(s1,s2));
-			oneOf(stubber).getEmptyCStub(s2); will(returnValue(code2));
+			oneOf(stubber).getStubOfSignature(s2); will(returnValue(code2));
 		}});
 		
-		CppUTestCodeGenerator cpputest = new CppUTestCodeGenerator(reader, stubber);
-		assertEquals(code2, cpputest.getEmptyStubOfCodeAtPosition(SOURCE_CODE, OFFSET));
+		CppUTestStubCreator cpputest = new CppUTestStubCreator(reader);
+		assertEquals(code2, cpputest.getStubOfCodeAtPosition(SOURCE_CODE, OFFSET, stubber));
 	}
 }

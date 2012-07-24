@@ -1,9 +1,10 @@
-package org.cpputest.plugin.generaltest;
+package org.cpputest.plugin.test;
 
 import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.SourceCodeResource;
-import org.cpputest.codeGenerator.UnitTestCodeGenerator;
-import org.cpputest.plugin.CppUTestSourceCodeStubber;
+import org.cpputest.codeGenerator.Stubber;
+import org.cpputest.codeGenerator.WhoCreateStubFromSourceCode;
+import org.cpputest.plugin.CppUTestSourceCodeStubberForEditor;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -13,25 +14,26 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 @RunWith(JMock.class)
-public class CppUTestSourceCodeStubberTest {
+public class CppUTestSourceCodeStubberForEditorTest {
 	private static final int CURSOR_OFFSET = 1;
 	Mockery context = new JUnit4Mockery();
 	final String EXPECTED_STUB = "stub";
 	final String SOURCE_CODE = "code";
 	final String ALL_CODE = "all code";
 	final SourceCodeResource resource = context.mock(SourceCodeResource.class);
-	final UnitTestCodeGenerator codeGenerator = context.mock(UnitTestCodeGenerator.class);
+	final WhoCreateStubFromSourceCode codeGenerator = context.mock(WhoCreateStubFromSourceCode.class);
+	final Stubber stubber = context.mock(Stubber.class);
 	@Test
 	public void testCopyEmptyStubOfSelectedCodeToClipboard() {
 		final CppCode code = new CppCode("not empty");
 		context.checking(new Expectations() {{
 	        allowing(resource).getSelectedText();
 	        will(returnValue(SOURCE_CODE));
-	        oneOf(codeGenerator).getEmptyStubOfCode(SOURCE_CODE);
+	        oneOf(codeGenerator).getStubOfCode(SOURCE_CODE, stubber);
 	        will(returnValue(code));
 	    }});		
-		CppUTestSourceCodeStubber cpputest = new CppUTestSourceCodeStubber(resource, codeGenerator);
-		cpputest.getEmptyStubOfCodeInEditor();
+		CppUTestSourceCodeStubberForEditor cpputest = new CppUTestSourceCodeStubberForEditor(resource, codeGenerator);
+		cpputest.getStubOfCodeInEditor(stubber);
 	}
 	@Test
 	public void testShouldTryAgainWithFullTextParsingWhenNoFunctionIsSelected() {
@@ -40,17 +42,17 @@ public class CppUTestSourceCodeStubberTest {
 		context.checking(new Expectations() {{
 	        allowing(resource).getSelectedText();
 	        will(returnValue(SOURCE_CODE));
-	        oneOf(codeGenerator).getEmptyStubOfCode(SOURCE_CODE);
+	        oneOf(codeGenerator).getStubOfCode(SOURCE_CODE, stubber);
 	        will(returnValue(emptyCode));
 	        allowing(resource).getFullText();
 	        will(returnValue(ALL_CODE));
 	        allowing(resource).getCursorPosition();
 	        will(returnValue(CURSOR_OFFSET));
-	        oneOf(codeGenerator).getEmptyStubOfCodeAtPosition(ALL_CODE, CURSOR_OFFSET);
+	        oneOf(codeGenerator).getStubOfCodeAtPosition(ALL_CODE, CURSOR_OFFSET, stubber);
 	        will(returnValue(code));
 	    }});		
-		CppUTestSourceCodeStubber cpputest = new CppUTestSourceCodeStubber(resource, codeGenerator);
-		assertEquals(code, cpputest.getEmptyStubOfCodeInEditor());
+		CppUTestSourceCodeStubberForEditor cpputest = new CppUTestSourceCodeStubberForEditor(resource, codeGenerator);
+		assertEquals(code, cpputest.getStubOfCodeInEditor(stubber));
 	}
 	@Test
 	public void testShouldAlertWhenNoFunctionSelect() {
@@ -58,16 +60,16 @@ public class CppUTestSourceCodeStubberTest {
 		context.checking(new Expectations() {{
 	        allowing(resource).getSelectedText();
 	        will(returnValue(SOURCE_CODE));
-	        oneOf(codeGenerator).getEmptyStubOfCode(SOURCE_CODE);
+	        oneOf(codeGenerator).getStubOfCode(SOURCE_CODE, stubber);
 	        will(returnValue(emptyCode));
 	        allowing(resource).getFullText();
 	        will(returnValue(ALL_CODE));
 	        allowing(resource).getCursorPosition();
 	        will(returnValue(CURSOR_OFFSET));
-	        oneOf(codeGenerator).getEmptyStubOfCodeAtPosition(ALL_CODE, CURSOR_OFFSET);
+	        oneOf(codeGenerator).getStubOfCodeAtPosition(ALL_CODE, CURSOR_OFFSET, stubber);
 	        will(returnValue(emptyCode));
 	    }});		
-		CppUTestSourceCodeStubber cpputest = new CppUTestSourceCodeStubber(resource, codeGenerator);
-		assertEquals(emptyCode, cpputest.getEmptyStubOfCodeInEditor());
+		CppUTestSourceCodeStubberForEditor cpputest = new CppUTestSourceCodeStubberForEditor(resource, codeGenerator);
+		assertEquals(emptyCode, cpputest.getStubOfCodeInEditor(stubber));
 	}
 }
