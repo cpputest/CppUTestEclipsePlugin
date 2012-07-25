@@ -2,15 +2,15 @@ package org.cpputest.plugin;
 
 import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppCodeFormater;
-import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
 import org.cpputest.codeGenerator.Stubber;
 
 public class CppUTestStubCodeUI implements StubCodeUI {
-	public final CppUTestPlatform platform;
+	public final CUTPlatformAdaptor platform;
 	public SourceCodeStubberForEditor sourceCodeStubber;
 	public final CppCodeFormater formater;
 
-	public CppUTestStubCodeUI(CppUTestPlatform platform, SourceCodeStubberForEditor sourceCodeStubber, CppCodeFormater formater) {
+	public CppUTestStubCodeUI(CUTPlatformAdaptor platform, SourceCodeStubberForEditor sourceCodeStubber, CppCodeFormater formater) {
 		this.platform = platform;
 		this.sourceCodeStubber = sourceCodeStubber;
 		this.formater = formater;

@@ -2,7 +2,7 @@ package org.cpputest.plugin.test;
 
 import org.cpputest.codeGenerator.CppCode;
 import org.cpputest.codeGenerator.CppCodeFormater;
-import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.plugin.CppUTestStubCodeUI;
 import org.cpputest.plugin.SourceCodeStubberForEditor;
@@ -20,7 +20,7 @@ public class CppUTestStubCodeUITest {
 	final String EXPECTED_STUB = "stub";
 	final String SOURCE_CODE = "code";
 	final String ALL_CODE = "all code";
-	final CppUTestPlatform platform = context.mock(CppUTestPlatform.class);
+	final CUTPlatformAdaptor platform = context.mock(CUTPlatformAdaptor.class);
 	final SourceCodeStubberForEditor stubbers = context.mock(SourceCodeStubberForEditor.class);
 	final CppCodeFormater formater = context.mock(CppCodeFormater.class);
 	final Stubber stubber = context.mock(Stubber.class);

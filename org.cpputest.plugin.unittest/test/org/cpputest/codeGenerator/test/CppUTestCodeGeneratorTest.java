@@ -1,4 +1,4 @@
-package org.cpputest.plugin.test;
+package org.cpputest.codeGenerator.test;
 
 import static org.junit.Assert.*;
 

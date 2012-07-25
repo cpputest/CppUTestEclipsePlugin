@@ -2,7 +2,7 @@ package org.cpputest.plugin.actions.test;
 
 import static org.junit.Assert.*;
 
-import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
 import org.cpputest.plugin.ICppUTestFactory;
 import org.cpputest.plugin.actions.*;
 import org.eclipse.jface.action.IAction;
@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 public class CppUTestActionTest {
 	Mockery context = new JUnit4Mockery();
 	final ICppUTestFactory factory = context.mock(ICppUTestFactory.class);
-	final CppUTestPlatform platform = context.mock(CppUTestPlatform.class);
+	final CUTPlatformAdaptor platform = context.mock(CUTPlatformAdaptor.class);
 	final IWorkbenchWindow window = context.mock(IWorkbenchWindow.class);
 
 	@Test

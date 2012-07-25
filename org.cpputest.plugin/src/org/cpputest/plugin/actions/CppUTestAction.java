@@ -1,6 +1,6 @@
 package org.cpputest.plugin.actions;
 
-import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
 import org.cpputest.plugin.CppUTestFactory;
 import org.cpputest.plugin.ICppUTestFactory;
 import org.eclipse.jface.action.IAction;
@@ -12,7 +12,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 
 public abstract class CppUTestAction implements IWorkbenchWindowActionDelegate, IObjectActionDelegate {
 	protected ICppUTestFactory factory = new CppUTestFactory();
-	private CppUTestPlatform platform;
+	private CUTPlatformAdaptor platform;
 	public CppUTestAction() {
 		this.factory = new CppUTestFactory();
 	}
@@ -51,7 +51,7 @@ public abstract class CppUTestAction implements IWorkbenchWindowActionDelegate, 
 	private void initializePlatform(IWorkbenchWindow window) {
 		this.platform = factory.createPlatformAdaptor(window);
 	}
-	protected CppUTestPlatform getPlatform() {
+	protected CUTPlatformAdaptor getPlatform() {
 		return this.platform;
 	}
 

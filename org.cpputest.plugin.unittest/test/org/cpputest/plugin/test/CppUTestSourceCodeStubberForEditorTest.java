@@ -1,7 +1,7 @@
 package org.cpputest.plugin.test;
 
 import org.cpputest.codeGenerator.CppCode;
-import org.cpputest.codeGenerator.SourceCodeResource;
+import org.cpputest.codeGenerator.SourceCodeProvider;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.codeGenerator.WhoCreateStubFromSourceCode;
 import org.cpputest.plugin.CppUTestSourceCodeStubberForEditor;
@@ -20,7 +20,7 @@ public class CppUTestSourceCodeStubberForEditorTest {
 	final String EXPECTED_STUB = "stub";
 	final String SOURCE_CODE = "code";
 	final String ALL_CODE = "all code";
-	final SourceCodeResource resource = context.mock(SourceCodeResource.class);
+	final SourceCodeProvider resource = context.mock(SourceCodeProvider.class);
 	final WhoCreateStubFromSourceCode codeGenerator = context.mock(WhoCreateStubFromSourceCode.class);
 	final Stubber stubber = context.mock(Stubber.class);
 	@Test

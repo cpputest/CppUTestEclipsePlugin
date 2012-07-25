@@ -4,7 +4,7 @@ import org.cpputest.codeGenerator.CompactCppCodeFormater;
 import org.cpputest.codeGenerator.CppCodeFormater;
 import org.cpputest.codeGenerator.CppDefaultMockStubber;
 import org.cpputest.codeGenerator.CppEmptyStubber;
-import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
 import org.cpputest.codeGenerator.CppUTestStubCreator;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.parser.CppSourceCodeReader;
@@ -23,7 +23,7 @@ public class CppUTestFactory implements ICppUTestFactory {
 //	}
 
 	@Override
-	public CppUTestPlatform createPlatformAdaptor(IWorkbenchWindow window) {
+	public CUTPlatformAdaptor createPlatformAdaptor(IWorkbenchWindow window) {
 		platform = new CppUTestEclipsePlatform(window);
 		return platform;
 	}

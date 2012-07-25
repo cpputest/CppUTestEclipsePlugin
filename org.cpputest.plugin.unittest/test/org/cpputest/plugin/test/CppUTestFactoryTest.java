@@ -6,7 +6,7 @@ import org.cpputest.codeGenerator.CompactCppCodeFormater;
 import org.cpputest.codeGenerator.CppCodeFormater;
 import org.cpputest.codeGenerator.CppDefaultMockStubber;
 import org.cpputest.codeGenerator.CppEmptyStubber;
-import org.cpputest.codeGenerator.CppUTestPlatform;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.plugin.CppUTestEclipsePlatform;
 import org.cpputest.plugin.CppUTestFactory;
@@ -21,7 +21,7 @@ public class CppUTestFactoryTest {
 	
 	@Test
 	public void testCreatePlatform() {
-		CppUTestPlatform platform = factory.createPlatformAdaptor(null);
+		CUTPlatformAdaptor platform = factory.createPlatformAdaptor(null);
 		assertTrue(CppUTestEclipsePlatform.class.isInstance(platform));
 	}
 	

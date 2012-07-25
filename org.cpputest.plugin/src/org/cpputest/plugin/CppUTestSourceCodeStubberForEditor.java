@@ -1,15 +1,15 @@
 package org.cpputest.plugin;
 
 import org.cpputest.codeGenerator.CppCode;
-import org.cpputest.codeGenerator.SourceCodeResource;
+import org.cpputest.codeGenerator.SourceCodeProvider;
 import org.cpputest.codeGenerator.Stubber;
 import org.cpputest.codeGenerator.WhoCreateStubFromSourceCode;
 
 public class CppUTestSourceCodeStubberForEditor implements SourceCodeStubberForEditor {
-	private final SourceCodeResource resource;
+	private final SourceCodeProvider resource;
 	private final WhoCreateStubFromSourceCode codeGenerator;
 
-	public CppUTestSourceCodeStubberForEditor(SourceCodeResource resource,
+	public CppUTestSourceCodeStubberForEditor(SourceCodeProvider resource,
 			WhoCreateStubFromSourceCode codeGenerator) {
 				this.resource = resource;
 				this.codeGenerator = codeGenerator;

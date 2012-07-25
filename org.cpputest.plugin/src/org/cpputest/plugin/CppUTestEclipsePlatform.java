@@ -1,7 +1,7 @@
 package org.cpputest.plugin;
 
-import org.cpputest.codeGenerator.CppUTestPlatform;
-import org.cpputest.codeGenerator.SourceCodeResource;
+import org.cpputest.codeGenerator.CUTPlatformAdaptor;
+import org.cpputest.codeGenerator.SourceCodeProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.IDocument;
@@ -15,7 +15,7 @@ import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 
-public class CppUTestEclipsePlatform implements CppUTestPlatform, SourceCodeResource {
+public class CppUTestEclipsePlatform implements CUTPlatformAdaptor, SourceCodeProvider {
 	private static final String PLUGIN_NAME = "CppUTest";
 	IWorkbenchWindow workbenchWindow;
 
